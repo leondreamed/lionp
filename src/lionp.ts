@@ -1,3 +1,3 @@
 import { lionpCli } from './utils/cli.js';
 
-lionpCli();
+void lionpCli();
