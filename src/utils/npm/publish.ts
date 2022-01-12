@@ -35,7 +35,7 @@ export const publish = (
 	options: LionpOptions
 ) =>
 	from(pkgPublish(pkgManager, options)).pipe(
-		catchError((error) =>
+		catchError(async (error) =>
 			handleNpmError(error, task, (otp: string) => {
 				context.otp = otp;
 

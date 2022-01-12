@@ -101,7 +101,11 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 				task: () => gitTasks(options),
 			},
 		],
-		{}
+		{
+			rendererOptions: {
+				showSubtasks: false,
+			},
+		}
 	);
 
 	tasks.add([]);
@@ -153,6 +157,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 
 					return `${previewText}.`;
 				}
+
+				return false;
 			},
 			task: () => {
 				const args = ['version', input];
@@ -177,6 +183,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 							' '
 						)}.`;
 					}
+
+					return false;
 				},
 				task: (context, task) => {
 					let hasError = false;
@@ -214,6 +222,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 							const args = getEnable2faArgs(pkg.name, options);
 							return `[Preview] Command not executed: npm ${args.join(' ')}.`;
 						}
+
+						return false;
 					},
 					task: (context, task) =>
 						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -239,6 +249,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 			if (publishStatus === 'FAILED' && options.runPublish) {
 				return "Couldn't publish package to npm; not pushing.";
 			}
+
+			return false;
 		},
 		task: async () => {
 			pushedObjects = await git.pushGraceful(isOnGitHub);
@@ -253,6 +265,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 				if (options.preview) {
 					return '[Preview] GitHub Releases draft will not be opened in preview mode.';
 				}
+
+				return false;
 			},
 			task: async () => releaseTaskHelper(options, pkg),
 		});
