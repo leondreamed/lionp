@@ -13,7 +13,7 @@ import { readPkg } from './util.js';
 import { lionp } from './lionp.js';
 import { promptVersion } from './prompt-version.js';
 
-export const lionpCli = () => {
+export async function lionpCli() {
 	const cli = meow(
 		`
 	Usage
@@ -98,7 +98,7 @@ export const lionpCli = () => {
 
 	updateNotifier({ pkg: cli.pkg as Package }).notify();
 
-	(async () => {
+	try {
 		const pkg = readPkg();
 
 		const defaultFlags = {
@@ -165,8 +165,9 @@ export const lionpCli = () => {
 		}
 
 		console.log(`\n ${newPkg.name} ${newPkg.version} published 🎉`);
-	})().catch((error: ExecaError) => {
-		console.error(`\n${logSymbols.error} ${error.message}`);
+	} catch (error: unknown) {
+		const err = error as ExecaError;
+		console.error(`\n${logSymbols.error} ${err.message}`);
 		process.exit(1);
-	});
-};
+	}
+}

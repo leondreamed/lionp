@@ -1,7 +1,7 @@
 {
 	"name": "lionp",
 	"version": "1.0.0",
-	"main": "dist/index.js",
+	"main": "index.js",
 	"type": "module",
 	"license": "MIT",
 	"prettier": "@leonzalion/configs/prettier",
@@ -12,7 +12,7 @@
 	},
 	"scripts": {
 		"prepare": "simple-git-hooks",
-		"start": "node --loader ts-node/esm ./src/index.ts",
+		"start": "node --loader ts-node/esm ./src/lionp.ts",
 		"test": "NODE_OPTIONS=--experimental-vm-modules jest",
 		"prepublish": "pnpm test && pnpm build",
 		"lint": "eslint --cache --fix .",
