@@ -62,7 +62,7 @@ export class Version {
 		});
 	}
 
-	getNewVersionFrom(input: ReleaseType) {
+	getNewVersionFrom(input: string) {
 		validate(this.version);
 		if (!isValidInput(input)) {
 			throw new Error(
@@ -72,8 +72,8 @@ export class Version {
 			);
 		}
 
-		return SEMVER_INCREMENTS.includes(input)
-			? semver.inc(this.version, input)
+		return SEMVER_INCREMENTS.includes(input as ReleaseType)
+			? semver.inc(this.version, input as ReleaseType)
 			: input;
 	}
 

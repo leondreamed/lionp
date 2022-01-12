@@ -10,10 +10,10 @@ export const releaseTaskHelper = async (
 	pkg: PackageJson
 ) => {
 	const newVersion = createVersion(pkg.version!).getNewVersionFrom(
-		options.version
+		options.version!
 	)!;
 	let tag = `${await getTagVersionPrefix(options)}${newVersion}`;
-	const isPreRelease = createVersion(options.version).isPrerelease();
+	const isPreRelease = createVersion(options.version!).isPrerelease();
 	if (isPreRelease) {
 		tag += await getPreReleasePrefix();
 	}

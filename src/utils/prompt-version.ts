@@ -11,8 +11,9 @@ import {
 	SEMVER_INCREMENTS,
 	validate,
 } from './version.js';
+import type { LionpOptions } from '~/types/options.js';
 
-export async function promptVersion(options: any, pkg: PackageJson) {
+export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 	const oldVersion = pkg.version!;
 	validate(oldVersion);
 
@@ -112,6 +113,7 @@ export async function promptVersion(options: any, pkg: PackageJson) {
 	const answers = await inquirer.prompt(prompts);
 
 	return {
+		...options,
 		version: answers.version || answers.customVersion,
 		confirm: true,
 		repoUrl,

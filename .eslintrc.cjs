@@ -5,4 +5,7 @@ module.exports = {
 	extends: [require.resolve('@leonzalion/configs/eslint')],
 	parserOptions: { project: [path.resolve(__dirname, 'tsconfig.eslint.json')] },
 	settings: createAliases({ '~': './src', '~test': './test' }),
+	rules: {
+		'unicorn/no-process-exit': 'off',
+	},
 };

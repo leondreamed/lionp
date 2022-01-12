@@ -92,7 +92,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 	const tasks = new Listr([
 		{
 			title: 'Prerequisite check',
-			enabled: () => options.runPublish,
+			enabled: () => options.runPublish!,
 			task: () => prerequisiteTasks(input, pkg, options),
 		},
 		{
@@ -198,8 +198,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 		const isExternalRegistry = npm.isExternalRegistry(pkg);
 		if (
 			options['2fa'] &&
-			options.availability.isAvailable &&
-			!options.availability.isUnknown &&
+			options.availability?.isAvailable &&
+			!options.availability?.isUnknown &&
 			!pkg.private &&
 			!isExternalRegistry
 		) {

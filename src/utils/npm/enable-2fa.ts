@@ -6,7 +6,7 @@ import { handleNpmError } from './handle-npm-error.js';
 
 export const getEnable2faArgs = (
 	packageName: string,
-	options: { otp: string }
+	options: { otp?: string }
 ) => {
 	const args = ['access', '2fa-required', packageName];
 

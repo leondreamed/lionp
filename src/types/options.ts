@@ -1,24 +1,23 @@
-import type { ReleaseType } from 'semver';
-
 export type LionpOptions = {
 	releaseNotes: (tag: string) => string;
-	'2fa': boolean;
+	'2fa'?: boolean;
 	testScript?: string;
-	version: ReleaseType;
+	version?: string;
 	preview?: boolean;
-	anyBranch?: string;
-	branch: string;
-	runPublish: boolean;
-	message: string;
+	anyBranch?: boolean;
+	branch?: string;
+	runPublish?: boolean;
+	message?: string;
 	tag?: string;
-	otp: string;
-	publishScoped: boolean;
+	publishScoped?: boolean;
 	tests?: boolean;
+	otp?: string;
 	cleanup?: boolean;
 	contents?: string;
 	repoUrl?: string;
-	releaseDraft: boolean;
-	availability: {
+	releaseDraft?: boolean;
+	releaseDraftOnly?: boolean;
+	availability?: {
 		isAvailable: boolean;
 		isUnknown: boolean;
 	};
