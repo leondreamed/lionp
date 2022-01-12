@@ -13,7 +13,7 @@ export async function handleNpmError(
 	}
 
 	// `one-time pass` is for npm
-	if (error.stderr.includes('one-time pass')) {
+	if (error.stderr?.includes('one-time pass')) {
 		const { title } = task;
 		task.title = `${title} ${chalk.yellow('(waiting for input…)')}`;
 
