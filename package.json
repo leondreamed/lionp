@@ -5,6 +5,9 @@
 	"type": "module",
 	"license": "MIT",
 	"prettier": "@leonzalion/configs/prettier",
+	"lionp": {
+		"tests": false
+	},
 	"commitlint": {
 		"extends": [
 			"@leonzalion/configs/commitlint"
