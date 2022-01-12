@@ -187,9 +187,9 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 					return false;
 				},
 				task: (context, task) => {
+					console.log('hi');
 					let hasError = false;
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 					return publish(context, pkgManager, task, options).pipe(
 						catchError(async (error: ExecaError) => {
 							hasError = true;
