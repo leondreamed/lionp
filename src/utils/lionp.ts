@@ -7,7 +7,6 @@ import hostedGitInfo from 'hosted-git-info';
 import { packageDirectorySync } from 'pkg-dir';
 import onetime from 'onetime';
 import exitHook from 'async-exit-hook';
-import { catchError, finalize } from 'rxjs';
 import del from 'del';
 import logSymbols from 'log-symbols';
 import { readPackageUp } from 'read-pkg-up';
@@ -186,24 +185,22 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 
 					return false;
 				},
-				task: (context, task) => {
+				task: async (context, task) => {
 					console.log('hi');
 					let hasError = false;
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-					return publish(context, pkgManager, task, options).pipe(
-						catchError(async (error: ExecaError) => {
-							hasError = true;
-							await rollback();
-							throw new Error(
-								`Error publishing package:\n${error.message}\n\nThe project was rolled back to its previous state.`
-							);
-						}),
-						finalize(() => {
-							console.log('hi')
-							publishStatus = hasError ? 'FAILED' : 'SUCCESS';
-						})
-					) as any;
+					try {
+						await publish(context, pkgManager, task, options);
+					} catch (error: unknown) {
+						const err = error as ExecaError;
+						hasError = true;
+						await rollback();
+						throw new Error(
+							`Error publishing package:\n${err.message}\n\nThe project was rolled back to its previous state.`
+						);
+					}
+
+					publishStatus = hasError ? 'FAILED' : 'SUCCESS';
 				},
 			},
 		]);

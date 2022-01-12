@@ -83,7 +83,6 @@
 		"p-timeout": "^5.0.2",
 		"pkg-dir": "^6.0.1",
 		"read-pkg-up": "^9.0.0",
-		"rxjs": "^7.5.2",
 		"semver": "^7.3.5",
 		"symbol-observable": "^4.0.0",
 		"terminal-link": "^3.0.0",
@@ -94,5 +93,8 @@
 		"node": ">=10",
 		"npm": ">=6.8.0",
 		"git": ">=2.11.0"
+	},
+	"publishConfig": {
+		"directory": "dist"
 	}
 }
