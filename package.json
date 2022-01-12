@@ -13,7 +13,6 @@
 	"scripts": {
 		"prepare": "simple-git-hooks",
 		"start": "node --loader ts-node/esm ./src/lionp.ts",
-		"test": "FORCE_HYPERLINK=1 ava",
 		"prepublish": "pnpm test && pnpm build",
 		"lint": "eslint --cache --fix .",
 		"prettier": "prettier --write src",

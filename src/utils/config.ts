@@ -10,7 +10,7 @@ export const getConfig = async (): Promise<LionpOptions> => {
 		'.np-config.cjs',
 		'package.json',
 	];
-	const explorer = cosmiconfig('np', {
+	const explorer = cosmiconfig('lionp', {
 		searchPlaces,
 		stopDir: searchDir,
 	});
