@@ -190,6 +190,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 					console.log('hi');
 					let hasError = false;
 
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 					return publish(context, pkgManager, task, options).pipe(
 						catchError(async (error: ExecaError) => {
 							hasError = true;
@@ -199,6 +200,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 							);
 						}),
 						finalize(() => {
+							console.log('hi')
 							publishStatus = hasError ? 'FAILED' : 'SUCCESS';
 						})
 					) as any;
