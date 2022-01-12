@@ -107,8 +107,6 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 		}
 	);
 
-	tasks.add([]);
-
 	if (runCleanup) {
 		tasks.add([
 			{
@@ -186,7 +184,6 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 					return false;
 				},
 				task: async (context, task) => {
-					console.log('hi');
 					let hasError = false;
 
 					try {
@@ -224,9 +221,9 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 
 						return false;
 					},
-					task: (context, task) =>
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-						enable2fa(task, pkg.name, { otp: context.otp as string }) as any,
+					task: async (context, task) => {
+						await enable2fa(task, pkg.name, { otp: context.otp as string });
+					},
 				},
 			]);
 		}

@@ -22,6 +22,8 @@ export const getPackagePublishArguments = (options: LionpOptions) => {
 		args.push('--access', 'public');
 	}
 
+	throw new Error('args');
+
 	return args;
 };
 
