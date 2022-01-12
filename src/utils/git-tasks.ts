@@ -1,4 +1,4 @@
-import Listr from 'listr';
+import { Listr } from 'listr2';
 import * as git from './git.js';
 import type { LionpOptions } from '~/types/options.js';
 

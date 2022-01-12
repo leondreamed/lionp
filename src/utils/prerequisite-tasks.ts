@@ -1,5 +1,5 @@
 import process from 'node:process';
-import Listr from 'listr';
+import { Listr } from 'listr2';
 import type { PackageJson } from 'type-fest';
 import type { ReleaseType } from 'semver';
 import { createVersion, isValidInput, SEMVER_INCREMENTS } from './version.js';

@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import Listr from 'listr';
+import { Listr } from 'listr2';
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
 import hostedGitInfo from 'hosted-git-info';
@@ -89,17 +89,20 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 		}
 	);
 
-	const tasks = new Listr([
-		{
-			title: 'Prerequisite check',
-			enabled: () => options.runPublish!,
-			task: () => prerequisiteTasks(input, pkg, options),
-		},
-		{
-			title: 'Git',
-			task: () => gitTasks(options),
-		},
-	]);
+	const tasks = new Listr(
+		[
+			{
+				title: 'Prerequisite check',
+				enabled: () => options.runPublish!,
+				task: () => prerequisiteTasks(input, pkg, options),
+			},
+			{
+				title: 'Git',
+				task: () => gitTasks(options),
+			},
+		],
+		{}
+	);
 
 	tasks.add([]);
 
