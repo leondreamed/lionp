@@ -2,7 +2,6 @@ import { readPackageUpSync } from 'read-pkg-up';
 import issueRegex from 'issue-regex';
 import terminalLink from 'terminal-link';
 import pMemoize from 'p-memoize';
-import ow from 'ow';
 import { packageDirectorySync } from 'pkg-dir';
 import { execa } from 'execa';
 import type { PackageJson } from 'type-fest';
@@ -59,9 +58,7 @@ export const linkifyCommitRange = (url: string, commitRange: string) => {
 	return terminalLink(commitRange, `${url}/compare/${commitRange}`);
 };
 
-export const getTagVersionPrefix = pMemoize(async (options) => {
-	ow(options, ow.object.hasKeys('yarn'));
-
+export const getTagVersionPrefix = pMemoize(async () => {
 	try {
 		const { stdout } = await execa('pnpm', [
 			'config',

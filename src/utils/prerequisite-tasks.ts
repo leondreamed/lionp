@@ -99,7 +99,7 @@ export const prerequisiteTasks = (
 			task: async () => {
 				await git.fetch();
 
-				const tagPrefix = await getTagVersionPrefix(options);
+				const tagPrefix = await getTagVersionPrefix();
 
 				await git.verifyTagDoesNotExistOnRemote(`${tagPrefix}${newVersion!}`);
 			},

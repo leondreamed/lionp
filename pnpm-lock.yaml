@@ -40,7 +40,6 @@ specifiers:
   npm-name: ^6.0.1
   onetime: ^6.0.0
   open: ^8.4.0
-  ow: ^0.28.1
   p-memoize: ^6.0.1
   p-timeout: ^5.0.2
   pkg-dir: ^6.0.1
@@ -82,7 +81,6 @@ dependencies:
   npm-name: 6.0.1
   onetime: 6.0.0
   open: 8.4.0
-  ow: 0.28.1
   p-memoize: 6.0.1
   p-timeout: 5.0.2
   pkg-dir: 6.0.1
@@ -949,11 +947,6 @@ packages:
 
   /@sindresorhus/is/2.1.1:
     resolution: {integrity: sha512-/aPsuoj/1Dw/kzhkgz+ES6TxG0zfTMGLwuK2ZG00k/iJzYHTLCE8mVU8EPqEOp/lmxPoq1C1C9RYToRKb2KEfg==}
-    engines: {node: '>=10'}
-    dev: false
-
-  /@sindresorhus/is/4.2.1:
-    resolution: {integrity: sha512-BrzrgtaqEre0qfvI8sMTaEvx+bayuhPmfe2rfeUGPPHYr/PLxCOqkOe4TQTDPb+qcqgNcsAtXV/Ew74mcDIE8w==}
     engines: {node: '>=10'}
     dev: false
 
@@ -2351,13 +2344,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-obj: 2.0.0
-
-  /dot-prop/6.0.1:
-    resolution: {integrity: sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==}
-    engines: {node: '>=10'}
-    dependencies:
-      is-obj: 2.0.0
-    dev: false
 
   /duplexer3/0.1.4:
     resolution: {integrity: sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=}
@@ -4842,10 +4828,6 @@ packages:
     resolution: {integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=}
     dev: true
 
-  /lodash.isequal/4.5.0:
-    resolution: {integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=}
-    dev: false
-
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
     dev: true
@@ -5311,18 +5293,6 @@ packages:
   /os-tmpdir/1.0.2:
     resolution: {integrity: sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /ow/0.28.1:
-    resolution: {integrity: sha512-1EZTywPZeUKac9gD7q8np3Aj+V54kvfIcjNEVNDSbG2Ys5xA5foW2HquvMMqgyWGLqIFMlc0Iq/HmyMHqN48sA==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@sindresorhus/is': 4.2.1
-      callsites: 3.1.0
-      dot-prop: 6.0.1
-      lodash.isequal: 4.5.0
-      type-fest: 2.9.0
-      vali-date: 1.0.0
     dev: false
 
   /p-cancelable/1.1.0:
@@ -6671,11 +6641,6 @@ packages:
       convert-source-map: 1.8.0
       source-map: 0.7.3
     dev: true
-
-  /vali-date/1.0.0:
-    resolution: {integrity: sha1-G5BKWWCfsyjvB4E4Qgk09rhnCaY=}
-    engines: {node: '>=0.10.0'}
-    dev: false
 
   /validate-npm-package-license/3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}

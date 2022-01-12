@@ -1,5 +1,8 @@
+import * as path from 'node:path';
+import * as fs from 'node:fs';
 import type { ReleaseType } from 'semver';
 import semver from 'semver';
+import { rootPath } from './paths.js';
 
 export const SEMVER_INCREMENTS: ReleaseType[] = [
 	'patch',
@@ -37,8 +40,9 @@ export const verifyRequirementSatisfied = (
 	dependency: string,
 	version: string
 ) => {
-	// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, unicorn/prefer-module
-	const depRange = require('../package.json').engines[dependency] as string;
+	const depRange = JSON.parse(
+		fs.readFileSync(path.join(rootPath, 'package.json')).toString()
+	).engines[dependency] as string;
 	if (!createVersion(version).satisfies(depRange)) {
 		throw new Error(`Please upgrade to ${dependency}${depRange}`);
 	}

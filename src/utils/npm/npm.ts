@@ -1,6 +1,5 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import ow from 'ow';
 import ignoreWalker from 'ignore-walk';
 import type { Options } from 'npm-name';
 import npmName from 'npm-name';
@@ -82,7 +81,9 @@ export const username = async ({
 
 export const collaborators = async (pkg: PackageJson) => {
 	const packageName = pkg.name;
-	ow(packageName, ow.string);
+	if (typeof packageName !== 'string') {
+		throw new TypeError('package name must be a string');
+	}
 
 	const args = ['access', 'ls-collaborators', packageName];
 	if (isExternalRegistry(pkg)) {
@@ -104,7 +105,9 @@ export const collaborators = async (pkg: PackageJson) => {
 };
 
 export const prereleaseTags = async (packageName: string) => {
-	ow(packageName, ow.string);
+	if (typeof packageName !== 'string') {
+		throw new TypeError('package name must be a string');
+	}
 
 	let tags: string[] = [];
 	try {

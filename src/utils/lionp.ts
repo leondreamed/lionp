@@ -42,7 +42,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 	const rollback = onetime(async () => {
 		console.log('\nPublish failed. Rolling back to the previous state…');
 
-		const tagVersionPrefix = await getTagVersionPrefix(options);
+		const tagVersionPrefix = await getTagVersionPrefix();
 
 		const latestTag = await git.latestTag();
 		const versionInLatestTag = latestTag.slice(tagVersionPrefix.length);
