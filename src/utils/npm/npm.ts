@@ -142,7 +142,6 @@ export const isPackageNameAvailable = async (pkg: PackageJson) => {
 		});
 	}
 
-	console.log(await npmName('lionp'));
 	try {
 		availability.isAvailable =
 			(await npmName(...(args as [string, Options]))) || false;
