@@ -12,6 +12,7 @@ import { isPackageNameAvailable } from './npm/index.js';
 import { readPkg } from './util.js';
 import { lionp } from './lionp.js';
 import { promptVersion } from './prompt-version.js';
+import type { LionpOptions } from '~/types/options.js';
 
 export async function lionpCli() {
 	const cli = meow(
@@ -101,7 +102,8 @@ export async function lionpCli() {
 	try {
 		const pkg = readPkg();
 
-		const defaultFlags = {
+		const defaultFlags: Partial<LionpOptions> = {
+			runBuild: true,
 			cleanup: true,
 			tests: true,
 			publish: true,

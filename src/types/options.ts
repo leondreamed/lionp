@@ -23,4 +23,5 @@ export type LionpOptions = {
 		isAvailable: boolean;
 		isUnknown: boolean;
 	};
+	publish?: boolean;
 };
