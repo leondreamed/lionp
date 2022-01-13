@@ -1,5 +1,6 @@
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
+import type { ListrTaskWrapper } from 'listr2';
 import { handleNpmError } from './handle-npm-error.js';
 import type { LionpOptions } from '~/types/options';
 
@@ -31,7 +32,7 @@ const pkgPublish = (pkgManager: string, options: LionpOptions) =>
 export async function publish(
 	context: { otp: string },
 	pkgManager: string,
-	task: { title: string },
+	task: ListrTaskWrapper<Record<never, never>, any>,
 	options: LionpOptions
 ) {
 	try {

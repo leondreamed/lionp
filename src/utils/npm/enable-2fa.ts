@@ -1,5 +1,6 @@
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
+import type { ListrTaskWrapper } from 'listr2';
 import { handleNpmError } from './handle-npm-error.js';
 
 export const getEnable2faArgs = (
@@ -19,7 +20,7 @@ const npmEnable2fa = (packageName: string, options: { otp: string }) =>
 	execa('npm', getEnable2faArgs(packageName, options));
 
 export async function enable2fa(
-	task: { title: string },
+	task: ListrTaskWrapper<Record<never, never>, any>,
 	packageName: string,
 	options: { otp: string }
 ) {
