@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 import type { ExecaError } from 'execa';
-import inquirer from 'inquirer';
+import type { ListrTaskWrapper } from 'listr2';
 
 export async function handleNpmError(
 	error: ExecaError,
-	task: { title: string },
+	task: ListrTaskWrapper<Record<never, never>, any>,
 	message: string | ((opt: string) => Promise<unknown>),
 	executor?: (otp: string) => Promise<unknown>
 ): Promise<void> {
@@ -18,13 +18,10 @@ export async function handleNpmError(
 		task.title = `${title} ${chalk.yellow('(waiting for input…)')}`;
 
 		try {
-			const { otp } = await inquirer.prompt<{ otp: string }>([
-				{
-					name: 'otp',
-					message: 'Enter OTP:',
-					type: 'input',
-				},
-			]);
+			const otp = await task.prompt<string>({
+				message: 'Enter OTP:',
+				type: 'Text',
+			});
 			await executor?.(otp);
 		} catch (error: unknown) {
 			return handleNpmError(
