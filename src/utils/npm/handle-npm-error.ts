@@ -34,5 +34,7 @@ export async function handleNpmError(
 				executor
 			);
 		}
+	} else {
+		throw error;
 	}
 }
