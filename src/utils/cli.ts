@@ -158,7 +158,7 @@ export async function lionpCli() {
 		}
 
 		console.log(); // Prints a newline for readability
-		const newPkg = await lionp(options.version, options);
+		const newPkg = await lionp(options);
 
 		if (options.preview || options.releaseDraftOnly) {
 			return;

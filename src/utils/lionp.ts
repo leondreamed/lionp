@@ -20,10 +20,11 @@ import { releaseTaskHelper } from './release-task-helper.js';
 import { enable2fa, getEnable2faArgs } from './npm/index.js';
 import type { LionpOptions } from '~/types/options.js';
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-export async function lionp(input = 'patch', options: LionpOptions) {
+export async function lionp(options: LionpOptions) {
+	const version = options.version ?? 'patch';
 	const pkg = readPkg(options.contents);
 	const testScript = options.testScript ?? 'test';
+	const buildScript = options.buildScript ?? 'build';
 	const runCleanup = options.cleanup;
 	const runTests = options.tests;
 	const rootDir = packageDirectorySync();
@@ -35,6 +36,9 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 			? false
 			: (hostedGitInfo.fromUrl(options.repoUrl) ?? {}).type === 'github';
 	const testCommand = options.testScript ? ['run', testScript] : [testScript];
+	const buildCommand = options.buildScript
+		? ['run', buildScript]
+		: [buildScript];
 	let publishStatus = 'UNKNOWN';
 	let pushedObjects: { pushed: string; reason: string } | undefined;
 
@@ -93,7 +97,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 			{
 				title: 'Prerequisite check',
 				enabled: () => options.runPublish!,
-				task: () => prerequisiteTasks(input, pkg, options),
+				task: () => prerequisiteTasks(version, pkg, options),
 			},
 			{
 				title: 'Git',
@@ -145,12 +149,12 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 			title: 'Bumping version using pnpm',
 			skip: () => {
 				if (options.preview) {
-					let previewText = `[Preview] Command not executed: npm version ${input}`;
+					let previewText = `[Preview] Command not executed: npm version ${version}`;
 
 					if (options.message) {
 						previewText += ` --message '${options.message.replace(
 							/%s/g,
-							input
+							version
 						)}'`;
 					}
 
@@ -160,7 +164,7 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 				return false;
 			},
 			task: () => {
-				const args = ['version', input];
+				const args = ['version', version];
 
 				if (options.message) {
 					args.push('--message', options.message);
@@ -170,6 +174,25 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 			},
 		},
 	]);
+
+	if (options.runBuild) {
+		tasks.add([
+			{
+				title: 'Running build using pnpm',
+				task: async () => {
+					try {
+						await execa('pnpm', buildCommand);
+					} catch (error: unknown) {
+						const err = error as ExecaError;
+						await rollback();
+						throw new Error(
+							`Error: Build failed: ${err.message}; the project was rolled back to its previous state.`
+						);
+					}
+				},
+			},
+		]);
+	}
 
 	if (options.runPublish) {
 		tasks.add([
@@ -223,9 +246,8 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 
 						return false;
 					},
-					task: (context, task) =>
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-						enable2fa(task, pkg.name, { otp: context.otp as string }) as any,
+					task: async (context, task) =>
+						enable2fa(task, pkg.name, { otp: context.otp as string }),
 				},
 			]);
 		}
