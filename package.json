@@ -72,7 +72,7 @@
 		"is-interactive": "^2.0.0",
 		"is-scoped": "^3.0.0",
 		"issue-regex": "^4.0.0",
-		"listr2": "^4.0.0",
+		"listr2": "^3.14.0",
 		"log-symbols": "^5.1.0",
 		"meow": "^10.1.2",
 		"minimatch": "^3.0.4",

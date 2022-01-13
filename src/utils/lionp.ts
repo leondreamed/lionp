@@ -95,6 +95,13 @@ export async function lionp(options: LionpOptions) {
 	const tasks = new Listr(
 		[
 			{
+				task(ctx, task) {
+					void task.prompt({
+						message: 'sus',
+					});
+				},
+			},
+			{
 				title: 'Prerequisite check',
 				enabled: () => options.runPublish!,
 				task: () => prerequisiteTasks(version, pkg, options),
@@ -110,8 +117,6 @@ export async function lionp(options: LionpOptions) {
 			},
 		}
 	);
-
-	tasks.add([]);
 
 	if (runCleanup) {
 		tasks.add([
