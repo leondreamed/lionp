@@ -105,7 +105,7 @@ export async function lionpCli() {
 			publish: true,
 			releaseDraft: true,
 			'2fa': true,
-			directory: pkg.publishConfig.directory as string | undefined,
+			directory: pkg.publishConfig?.directory as string | undefined,
 		};
 
 		const localConfig = await getConfig();
