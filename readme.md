@@ -1,4 +1,4 @@
-# Lionp
+# lionp
 
 Like [np](https://github.com/sindresorhus/np) but for my personal publish workflow:
 
