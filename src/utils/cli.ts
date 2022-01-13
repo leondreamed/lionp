@@ -26,12 +26,11 @@ export async function lionpCli() {
 	  --branch               Name of the release branch (default: main | master)
 	  --no-cleanup           Skips cleanup of node_modules
 	  --no-tests             Skips tests
-	  --yolo                 Skips cleanup and testing
 	  --no-publish           Skips publishing
 	  --preview              Show tasks without actually executing them
 	  --tag                  Publish under a given dist-tag
 	  --no-yarn              Don't use Yarn
-	  --subdirectory         Subdirectory to publish
+	  --directory            Directory to publish
 	  --no-release-draft     Skips opening a GitHub release draft
 	  --release-draft-only   Only opens a GitHub release draft for the latest published version
 	  --test-script          Name of npm run script to run tests before publishing (default: test)
@@ -42,7 +41,7 @@ export async function lionpCli() {
 	  $ np patch
 	  $ np 1.0.2
 	  $ np 1.0.2-beta.3 --tag=beta
-	  $ np 1.0.2-beta.3 --tag=beta --subdirectory=dist
+	  $ np 1.0.2-beta.3 --tag=beta --directory=dist
 `,
 		{
 			importMeta: import.meta,
@@ -60,9 +59,6 @@ export async function lionpCli() {
 				tests: {
 					type: 'boolean',
 				},
-				yolo: {
-					type: 'boolean',
-				},
 				publish: {
 					type: 'boolean',
 				},
@@ -78,7 +74,7 @@ export async function lionpCli() {
 				yarn: {
 					type: 'boolean',
 				},
-				subdirectory: {
+				directory: {
 					type: 'string',
 				},
 				preview: {
@@ -109,7 +105,7 @@ export async function lionpCli() {
 			publish: true,
 			releaseDraft: true,
 			'2fa': true,
-			subdirectory: pkg.publishConfig.subdirectory as string | undefined,
+			directory: pkg.publishConfig.directory as string | undefined,
 		};
 
 		const localConfig = await getConfig();
