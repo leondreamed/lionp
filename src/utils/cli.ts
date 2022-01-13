@@ -18,7 +18,7 @@ export async function lionpCli() {
 	const cli = meow(
 		`
 	Usage
-	  $ np <version>
+	  $ lionp <version>
 	  Version can be:
 	    ${SEMVER_INCREMENTS.join(' | ')} | 1.2.3
 	Options
@@ -29,7 +29,6 @@ export async function lionpCli() {
 	  --no-publish           Skips publishing
 	  --preview              Show tasks without actually executing them
 	  --tag                  Publish under a given dist-tag
-	  --no-yarn              Don't use Yarn
 	  --directory            Directory to publish
 	  --no-release-draft     Skips opening a GitHub release draft
 	  --release-draft-only   Only opens a GitHub release draft for the latest published version
@@ -37,11 +36,11 @@ export async function lionpCli() {
 	  --no-2fa               Don't enable 2FA on new packages (not recommended)
 	  --message              Version bump commit message, '%s' will be replaced with version (default: '%s' with npm and 'v%s' with yarn)
 	Examples
-	  $ np
-	  $ np patch
-	  $ np 1.0.2
-	  $ np 1.0.2-beta.3 --tag=beta
-	  $ np 1.0.2-beta.3 --tag=beta --directory=dist
+	  $ lionp
+	  $ lionp patch
+	  $ lionp 1.0.2
+	  $ lionp 1.0.2-beta.3 --tag=beta
+	  $ lionp 1.0.2-beta.3 --tag=beta --directory=dist
 `,
 		{
 			importMeta: import.meta,
@@ -70,9 +69,6 @@ export async function lionpCli() {
 				},
 				tag: {
 					type: 'string',
-				},
-				yarn: {
-					type: 'boolean',
 				},
 				directory: {
 					type: 'string',
