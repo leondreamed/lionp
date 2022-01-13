@@ -1,7 +1,7 @@
 {
 	"name": "lionp",
 	"version": "1.0.7",
-	"main": "index.js",
+	"main": "lionp.js",
 	"type": "module",
 	"license": "MIT",
 	"prettier": "@leonzalion/configs/prettier",
