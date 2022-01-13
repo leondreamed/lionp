@@ -186,7 +186,6 @@ export async function lionp(input = 'patch', options: LionpOptions) {
 					return false;
 				},
 				task: async (context, task) => {
-					console.log('hi');
 					let hasError = false;
 
 					try {

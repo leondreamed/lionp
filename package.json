@@ -17,7 +17,7 @@
 		"prepare": "simple-git-hooks",
 		"start": "node --loader ts-node/esm ./src/lionp.ts",
 		"prepublish": "pnpm build",
-		"build": "tsc",
+		"build": "node --loader ts-node/esm ./scripts/build.ts",
 		"lint": "eslint --cache --fix .",
 		"prettier": "prettier --write src",
 		"tc": "tsc --noEmit"
