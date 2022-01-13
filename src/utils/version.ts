@@ -1,8 +1,6 @@
-import * as path from 'node:path';
-import * as fs from 'node:fs';
 import type { ReleaseType } from 'semver';
 import semver from 'semver';
-import { rootPath } from './paths.js';
+import { readPackageUpSync } from 'read-pkg-up';
 
 export const SEMVER_INCREMENTS: ReleaseType[] = [
 	'patch',
@@ -40,9 +38,10 @@ export const verifyRequirementSatisfied = (
 	dependency: string,
 	version: string
 ) => {
-	const depRange = JSON.parse(
-		fs.readFileSync(path.join(rootPath, 'package.json')).toString()
-	).engines[dependency] as string;
+	const { packageJson } = readPackageUpSync({
+		cwd: new URL('.', import.meta.url).pathname,
+	})!;
+	const depRange = packageJson.engines![dependency]!;
 	if (!createVersion(version).satisfies(depRange)) {
 		throw new Error(`Please upgrade to ${dependency}${depRange}`);
 	}
