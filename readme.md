@@ -13,3 +13,8 @@ Like [np](https://github.com/sindresorhus/np) but for my personal publish workfl
 3. Runs test scripts (if fails, reverts to old version)
 4. Runs build scripts (if fails, reverts to old version)
 5. Runs publish script
+
+## Run
+```zsh
+lionp
+```

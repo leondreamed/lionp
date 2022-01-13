@@ -6,4 +6,5 @@ const rootPath = new URL('..', import.meta.url).pathname;
 
 fs.rmSync(path.join(rootPath, 'dist'), { recursive: true, force: true });
 exec('tsc');
-fs.copyFileSync('package.json', 'dist/package.json');
+for (const file of ['package.json', 'README.md'])
+	fs.copyFileSync(file, path.join('dist', file));
