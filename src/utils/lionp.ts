@@ -22,7 +22,7 @@ import type { LionpOptions } from '~/types/options.js';
 
 export async function lionp(options: LionpOptions) {
 	const version = options.version ?? 'patch';
-	const pkg = readPkg(options.contents);
+	const pkg = readPkg();
 	const testScript = options.testScript ?? 'test';
 	const buildScript = options.buildScript ?? 'build';
 	const runCleanup = options.cleanup;

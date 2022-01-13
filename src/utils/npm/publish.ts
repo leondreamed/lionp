@@ -7,8 +7,8 @@ import type { LionpOptions } from '~/types/options';
 export const getPackagePublishArguments = (options: LionpOptions) => {
 	const args = ['publish'];
 
-	if (options.contents) {
-		args.push(options.contents);
+	if (options.subdirectory) {
+		args.push(options.subdirectory);
 	}
 
 	if (options.tag) {
