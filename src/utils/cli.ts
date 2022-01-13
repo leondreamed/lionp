@@ -29,7 +29,6 @@ export async function lionpCli() {
 	  --no-publish           Skips publishing
 	  --preview              Show tasks without actually executing them
 	  --tag                  Publish under a given dist-tag
-	  --directory            Directory to publish
 	  --no-release-draft     Skips opening a GitHub release draft
 	  --release-draft-only   Only opens a GitHub release draft for the latest published version
 	  --test-script          Name of npm run script to run tests before publishing (default: test)
@@ -40,7 +39,6 @@ export async function lionpCli() {
 	  $ lionp patch
 	  $ lionp 1.0.2
 	  $ lionp 1.0.2-beta.3 --tag=beta
-	  $ lionp 1.0.2-beta.3 --tag=beta --directory=dist
 `,
 		{
 			importMeta: import.meta,
@@ -68,9 +66,6 @@ export async function lionpCli() {
 					type: 'boolean',
 				},
 				tag: {
-					type: 'string',
-				},
-				directory: {
 					type: 'string',
 				},
 				preview: {
@@ -101,7 +96,6 @@ export async function lionpCli() {
 			publish: true,
 			releaseDraft: true,
 			'2fa': true,
-			directory: pkg.publishConfig?.directory as string | undefined,
 		};
 
 		const localConfig = await getConfig();

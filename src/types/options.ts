@@ -15,7 +15,6 @@ export type LionpOptions = {
 	tests?: boolean;
 	otp?: string;
 	cleanup?: boolean;
-	directory?: string;
 	repoUrl?: string;
 	releaseDraft?: boolean;
 	releaseDraftOnly?: boolean;
