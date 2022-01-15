@@ -2,7 +2,9 @@ import inquirer from 'inquirer';
 import type { ReleaseType } from 'semver';
 import type { PackageJson } from 'type-fest';
 import githubUrlFromGit from 'github-url-from-git';
-import { prereleaseTags } from './npm/index.js';
+import chalk from 'chalk';
+import isScoped from 'is-scoped';
+import { getRegistryUrl, prereleaseTags } from './npm/index.js';
 import { prettyVersionDiff } from './pretty-version-diff.js';
 import {
 	isPrereleaseOrIncrement,
@@ -11,6 +13,7 @@ import {
 	SEMVER_INCREMENTS,
 	validate,
 } from './version.js';
+import { printCommitLog } from './git.js';
 import type { LionpOptions } from '~/types/options.js';
 
 export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
@@ -23,6 +26,24 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 		githubUrlFromGit((pkg.repository as { url: string }).url, {
 			extraBaseUrls,
 		});
+	const pkgManager = 'pnpm';
+	const registryUrl = await getRegistryUrl(pkgManager, pkg);
+	const useLatestTag = !options.releaseDraftOnly;
+	const releaseBranch = options.branch;
+
+	if (options.releaseDraftOnly) {
+		console.log(
+			`\nCreate a release draft on GitHub for ${chalk.bold.magenta(
+				pkg.name
+			)} ${chalk.dim(`(current: ${oldVersion})`)}\n`
+		);
+	} else {
+		console.log(
+			`\nPublish a new version of ${chalk.bold.magenta(pkg.name)} ${chalk.dim(
+				`(current: ${oldVersion})`
+			)}\n`
+		);
+	}
 
 	const prompts = [
 		{
@@ -109,6 +130,76 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 			},
 		},
 	];
+
+	const { hasCommits, hasUnreleasedCommits, releaseNotes } =
+		await printCommitLog(repoUrl!, registryUrl, useLatestTag, releaseBranch!);
+
+	if (hasUnreleasedCommits && options.releaseDraftOnly) {
+		const answers = await inquirer.prompt<{ confirm: boolean }>([
+			{
+				type: 'confirm',
+				name: 'confirm',
+				message:
+					"Unreleased commits found. They won't be included in the release draft. Continue?",
+				default: false,
+			},
+		]);
+
+		if (!answers.confirm) {
+			return {
+				...options,
+				...answers,
+			};
+		}
+	}
+
+	if (options.version) {
+		return {
+			...options,
+			confirm: true,
+			repoUrl,
+			releaseNotes,
+		};
+	}
+
+	if (!hasCommits) {
+		const answers = await inquirer.prompt<{ confirm: boolean }>([
+			{
+				type: 'confirm',
+				name: 'confirm',
+				message: 'No commits found since previous release, continue?',
+				default: false,
+			},
+		]);
+
+		if (!answers.confirm) {
+			return {
+				...options,
+				...answers,
+			};
+		}
+	}
+
+	if (options.availability?.isUnknown) {
+		const answers = await inquirer.prompt<{ confirm: boolean }>([
+			{
+				type: 'confirm',
+				name: 'confirm',
+				when: isScoped(pkg.name!) && options.runPublish,
+				message: `Failed to check availability of scoped repo name ${chalk.bold.magenta(
+					pkg.name
+				)}. Do you want to try and publish it anyway?`,
+				default: false,
+			},
+		]);
+
+		if (!answers.confirm) {
+			return {
+				...options,
+				...answers,
+			};
+		}
+	}
 
 	const answers = await inquirer.prompt(prompts);
 

@@ -3,7 +3,11 @@ import { execa } from 'execa';
 import escapeStringRegexp from 'escape-string-regexp';
 import ignoreWalker from 'ignore-walk';
 import { packageDirectorySync } from 'pkg-dir';
+import { htmlEscape } from 'escape-goat';
+import chalk from 'chalk';
 import { verifyRequirementSatisfied } from './version.js';
+import * as git from './git.js';
+import * as util from './util.js';
 
 export const latestTag = async () => {
 	const { stdout } = await execa('git', ['describe', '--abbrev=0', '--tags']);
@@ -311,3 +315,89 @@ export const checkIfFileGitIgnored = async (pathToFile: string) => {
 		throw error;
 	}
 };
+
+export async function printCommitLog(
+	repoUrl: string,
+	registryUrl: string,
+	fromLatestTag: boolean,
+	releaseBranch: string
+) {
+	const revision = fromLatestTag
+		? await git.latestTagOrFirstCommit()
+		: await git.previousTagOrFirstCommit();
+	if (!revision) {
+		throw new Error('The package has not been published yet.');
+	}
+
+	const log = await git.commitLogFromRevision(revision);
+
+	if (!log) {
+		return {
+			hasCommits: false,
+			hasUnreleasedCommits: false,
+			releaseNotes: () => {
+				/* Noop */
+			},
+		};
+	}
+
+	let hasUnreleasedCommits = false;
+	let commitRangeText = `${revision}...${releaseBranch}`;
+
+	let commits = log.split('\n').map((commit) => {
+		const splitIndex = commit.lastIndexOf(' ');
+		return {
+			message: commit.slice(0, splitIndex),
+			id: commit.slice(splitIndex + 1),
+		};
+	});
+
+	if (!fromLatestTag) {
+		const latestTag = await git.latestTag();
+
+		// Version bump commit created by np, following the semver specification.
+		const versionBumpCommitName =
+			/v\d+\.\d+\.\d+/.exec(latestTag) && latestTag.slice(1); // Name v1.0.1 becomes 1.0.1
+		const versionBumpCommitIndex = commits.findIndex(
+			(commit) => commit.message === versionBumpCommitName
+		);
+
+		if (versionBumpCommitIndex > 0) {
+			commitRangeText = `${revision}...${latestTag}`;
+			hasUnreleasedCommits = true;
+		}
+
+		if (await git.isHeadDetached()) {
+			commitRangeText = `${revision}...${latestTag}`;
+		}
+
+		// Get rid of unreleased commits and of the version bump commit.
+		commits = commits.slice(versionBumpCommitIndex + 1);
+	}
+
+	const history = commits
+		.map((commit) => {
+			const commitMessage = util.linkifyIssues(repoUrl, commit.message);
+			const commitId = util.linkifyCommit(repoUrl, commit.id);
+			return `- ${commitMessage}  ${commitId}`;
+		})
+		.join('\n');
+
+	const releaseNotes = (nextTag: string) =>
+		commits
+			.map((commit) => `- ${htmlEscape(commit.message)}  ${commit.id}`)
+			.join('\n') + `\n\n${repoUrl}/compare/${revision}...${nextTag}`;
+
+	const commitRange = util.linkifyCommitRange(repoUrl, commitRangeText);
+	console.log(
+		`${chalk.bold('Commits:')}\n${history}\n\n${chalk.bold(
+			'Commit Range:'
+		)}\n${commitRange}\n\n${chalk.bold('Registry:')}\n${registryUrl}\n`
+	);
+
+	return {
+		hasCommits: true,
+		hasUnreleasedCommits,
+		releaseNotes,
+	};
+}
