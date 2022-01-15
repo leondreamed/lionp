@@ -14,7 +14,7 @@ specifiers:
   '@types/semver': ^7.3.9
   '@types/update-notifier': ^5.1.0
   async-exit-hook: ^2.0.1
-  chalk: ^5.0.0
+  chalk: ^4.1.2
   cosmiconfig: ^7.0.1
   del: ^6.0.0
   enquirer: ^2.3.6
@@ -32,7 +32,7 @@ specifiers:
   jest: ^27.4.7
   lint-staged: ^12.1.7
   listr2: ^3.14.0
-  log-symbols: ^5.1.0
+  log-symbols: ^4.1.0
   meow: ^10.1.2
   minimatch: ^3.0.4
   new-github-release-url: ^2.0.0
@@ -59,7 +59,7 @@ specifiers:
 
 dependencies:
   async-exit-hook: 2.0.1
-  chalk: 5.0.0
+  chalk: 4.1.2
   cosmiconfig: 7.0.1
   del: 6.0.0
   enquirer: 2.3.6
@@ -73,7 +73,7 @@ dependencies:
   is-scoped: 3.0.0
   issue-regex: 4.0.0
   listr2: 3.14.0_enquirer@2.3.6
-  log-symbols: 5.1.0
+  log-symbols: 4.1.0
   meow: 10.1.2
   minimatch: 3.0.4
   new-github-release-url: 2.0.0
@@ -1776,11 +1776,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-
-  /chalk/5.0.0:
-    resolution: {integrity: sha512-/duVOqst+luxCQRKEo4bNxinsOQtMP80ZYm7mMqzuh5PociNL0PvmHFvREJ9ueYL2TxlHjBcmLCdmocx9Vg+IQ==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: false
 
   /char-regex/1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
@@ -3924,11 +3919,6 @@ packages:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
 
-  /is-unicode-supported/1.1.0:
-    resolution: {integrity: sha512-lDcxivp8TJpLG75/DpatAqNzOpDPSpED8XNtrpBHTdQ2InQ1PbW78jhwSxyxhhu+xbVSast2X38bwj8atwoUQA==}
-    engines: {node: '>=12'}
-    dev: false
-
   /is-url-superb/4.0.0:
     resolution: {integrity: sha512-GI+WjezhPPcbM+tqE9LnmsY5qqjwHzTvjJ36wxYX5ujNXefSUJ/T17r5bqDV8yLhcgB59KTPNOc9O9cmHTPWsA==}
     engines: {node: '>=10'}
@@ -4755,14 +4745,6 @@ packages:
     dependencies:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
-
-  /log-symbols/5.1.0:
-    resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
-    engines: {node: '>=12'}
-    dependencies:
-      chalk: 5.0.0
-      is-unicode-supported: 1.1.0
-    dev: false
 
   /log-update/4.0.0:
     resolution: {integrity: sha512-9fkkDevMefjg0mmzWFBW8YkFP91OrizzkW3diF7CpG+S2EYdy4+TVfGwz1zeF8x7hCx1ovSPTOE9Ngib74qqUg==}
