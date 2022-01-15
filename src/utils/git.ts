@@ -335,9 +335,7 @@ export async function printCommitLog(
 		return {
 			hasCommits: false,
 			hasUnreleasedCommits: false,
-			releaseNotes: () => {
-				/* Noop */
-			},
+			releaseNotes: (_tag: string) => '',
 		};
 	}
 
