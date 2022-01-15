@@ -21,7 +21,7 @@ export const releaseTaskHelper = async (
 	const url = newGithubReleaseUrl({
 		repoUrl: options.repoUrl!,
 		tag,
-		body: options.releaseNotes(tag),
+		body: options.releaseNotes === undefined ? '' : options.releaseNotes(tag),
 		isPrerelease: isPreRelease,
 	});
 
