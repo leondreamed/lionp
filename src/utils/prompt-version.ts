@@ -1,7 +1,6 @@
 import inquirer from 'inquirer';
 import type { ReleaseType } from 'semver';
 import type { PackageJson } from 'type-fest';
-import githubUrlFromGit from 'github-url-from-git';
 import chalk from 'chalk';
 import isScoped from 'is-scoped';
 import { getRegistryUrl, prereleaseTags } from './npm/index.js';
@@ -16,16 +15,31 @@ import {
 import { printCommitLog } from './git.js';
 import type { LionpOptions } from '~/types/options.js';
 
-export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
+type PromptVersionOptions = {
+	releaseDraftOnly: boolean;
+	branch: string;
+	repoUrl: string | undefined;
+	tag: string;
+	runPublish: boolean;
+	version: string;
+	availability: {
+		isUnknown: boolean;
+		isAvailable: boolean;
+	};
+};
+
+export async function promptVersion(
+	options: PromptVersionOptions,
+	pkg: PackageJson
+): Promise<{
+	confirm: boolean;
+	version: string;
+	releaseNotes?: LionpOptions['releaseNotes'];
+}> {
 	const oldVersion = pkg.version!;
 	validate(oldVersion);
 
-	const extraBaseUrls = ['gitlab.com'];
-	const repoUrl =
-		pkg.repository &&
-		githubUrlFromGit((pkg.repository as { url: string }).url, {
-			extraBaseUrls,
-		});
+	const { repoUrl } = options;
 	const pkgManager = 'pnpm';
 	const registryUrl = await getRegistryUrl(pkgManager, pkg);
 	const useLatestTag = !options.releaseDraftOnly;
@@ -132,7 +146,7 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 	];
 
 	const { hasCommits, hasUnreleasedCommits, releaseNotes } =
-		await printCommitLog(repoUrl!, registryUrl, useLatestTag, releaseBranch!);
+		await printCommitLog(repoUrl, registryUrl, useLatestTag, releaseBranch);
 
 	if (hasUnreleasedCommits && options.releaseDraftOnly) {
 		const answers = await inquirer.prompt<{ confirm: boolean }>([
@@ -157,7 +171,6 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 		return {
 			...options,
 			confirm: true,
-			repoUrl,
 			releaseNotes,
 		};
 	}
@@ -180,7 +193,7 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 		}
 	}
 
-	if (options.availability?.isUnknown) {
+	if (options.availability.isUnknown) {
 		const answers = await inquirer.prompt<{ confirm: boolean }>([
 			{
 				type: 'confirm',
@@ -207,6 +220,5 @@ export async function promptVersion(options: LionpOptions, pkg: PackageJson) {
 		...options,
 		version: answers.version || answers.customVersion,
 		confirm: true,
-		repoUrl,
 	};
 }

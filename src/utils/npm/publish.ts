@@ -4,7 +4,9 @@ import type { ListrTaskWrapper } from 'listr2';
 import { handleNpmError } from './handle-npm-error.js';
 import type { LionpOptions } from '~/types/options';
 
-export const getPackagePublishArguments = (options: LionpOptions) => {
+export const getPackagePublishArguments = (
+	options: LionpOptions & { otp?: string }
+) => {
 	const args = ['publish'];
 
 	if (options.tag) {
@@ -22,13 +24,15 @@ export const getPackagePublishArguments = (options: LionpOptions) => {
 	return args;
 };
 
-const pkgPublish = (pkgManager: string, options: LionpOptions) =>
-	execa(pkgManager, getPackagePublishArguments(options));
+const pkgPublish = (
+	pkgManager: string,
+	options: LionpOptions & { otp?: string }
+) => execa(pkgManager, getPackagePublishArguments(options));
 
 export async function publish(
 	context: { otp: string },
 	pkgManager: string,
-	task: ListrTaskWrapper<Record<never, never>, any>,
+	task: ListrTaskWrapper<{ otp: string }, any>,
 	options: LionpOptions
 ) {
 	try {

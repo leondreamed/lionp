@@ -26,7 +26,7 @@ export const readPkg = (packagePath?: string) => {
 	return packageJson;
 };
 
-export const linkifyIssues = (url: string, message: string) => {
+export const linkifyIssues = (url: string | undefined, message: string) => {
 	if (!(url && terminalLink.isSupported)) {
 		return message;
 	}
@@ -42,7 +42,7 @@ export const linkifyIssues = (url: string, message: string) => {
 	});
 };
 
-export const linkifyCommit = (url: string, commit: string) => {
+export const linkifyCommit = (url: string | undefined, commit: string) => {
 	if (!(url && terminalLink.isSupported)) {
 		return commit;
 	}
@@ -50,7 +50,10 @@ export const linkifyCommit = (url: string, commit: string) => {
 	return terminalLink(commit, `${url}/commit/${commit}`);
 };
 
-export const linkifyCommitRange = (url: string, commitRange: string) => {
+export const linkifyCommitRange = (
+	url: string | undefined,
+	commitRange: string
+) => {
 	if (!(url && terminalLink.isSupported)) {
 		return commitRange;
 	}

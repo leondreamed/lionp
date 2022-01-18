@@ -317,7 +317,7 @@ export const checkIfFileGitIgnored = async (pathToFile: string) => {
 };
 
 export async function printCommitLog(
-	repoUrl: string,
+	repoUrl: string | undefined,
 	registryUrl: string,
 	fromLatestTag: boolean,
 	releaseBranch: string
@@ -381,10 +381,13 @@ export async function printCommitLog(
 		})
 		.join('\n');
 
-	const releaseNotes = (nextTag: string) =>
-		commits
-			.map((commit) => `- ${htmlEscape(commit.message)}  ${commit.id}`)
-			.join('\n') + `\n\n${repoUrl}/compare/${revision}...${nextTag}`;
+	const releaseNotes =
+		repoUrl === undefined
+			? () => ''
+			: (nextTag: string) =>
+					commits
+						.map((commit) => `- ${htmlEscape(commit.message)}  ${commit.id}`)
+						.join('\n') + `\n\n${repoUrl}/compare/${revision}...${nextTag}`;
 
 	const commitRange = util.linkifyCommitRange(repoUrl, commitRangeText);
 	console.log(

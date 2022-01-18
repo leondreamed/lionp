@@ -1,21 +1,20 @@
 import process from 'node:process';
-import 'symbol-observable'; // Important: This needs to be first to prevent weird Observable incompatibilities
 import logSymbols from 'log-symbols';
 import meow from 'meow';
 import type { Package } from 'update-notifier';
 import updateNotifier from 'update-notifier';
 import type { ExecaError } from 'execa';
-import { getConfig } from './config.js';
-import * as git from './git.js';
+import { getConfig, getDefaultConfig } from './config.js';
 import { SEMVER_INCREMENTS } from './version.js';
-import { isPackageNameAvailable } from './npm/index.js';
 import { readPkg } from './util.js';
 import { lionp } from './lionp.js';
 import { promptVersion } from './prompt-version.js';
-import type { LionpOptions } from '~/types/options.js';
+import { getLionpOptions } from './options.js';
+import type { DefaultConfig, LionpConfig } from '~/types/config.js';
+import type { LionpCliFlags } from '~/types/cli.js';
 
-export async function lionpCli() {
-	const cli = meow(
+export function getLionpCli() {
+	return meow(
 		`
 	Usage
 	  $ lionp <version>
@@ -83,72 +82,35 @@ export async function lionpCli() {
 			},
 		}
 	);
+}
 
+export async function lionpCli() {
+	const cli = getLionpCli();
 	updateNotifier({ pkg: cli.pkg as Package }).notify();
 
 	try {
 		const pkg = readPkg();
 
-		const defaultFlags: Partial<LionpOptions> = {
-			runBuild: true,
-			cleanup: true,
-			publish: true,
-			releaseDraft: true,
-			'2fa': true,
-		};
-
+		const defaultConfig = getDefaultConfig(pkg);
 		const localConfig = await getConfig();
 
-		const flags = {
-			...defaultFlags,
+		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+		const config = {
+			...defaultConfig,
 			...localConfig,
 			...cli.flags,
-		};
+		} as DefaultConfig & LionpConfig & LionpCliFlags;
 
-		flags.tests = flags.tests ?? pkg.scripts?.[flags.testScript] !== undefined;
+		const options = await getLionpOptions(config, cli);
 
-		// Workaround for unintended auto-casing behavior from `meow`.
-		if ('2Fa' in flags) {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-			// @ts-ignore
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,
-			flags['2fa'] = flags['2Fa'];
-		}
+		const promptResults = await promptVersion(options, pkg);
 
-		const runPublish = !flags.releaseDraftOnly && flags.publish && !pkg.private;
-
-		const availability = flags.publish
-			? await isPackageNameAvailable(pkg)
-			: {
-					isAvailable: false,
-					isUnknown: false,
-			  };
-
-		// Use current (latest) version when 'releaseDraftOnly', otherwise use the first argument.
-		const version = flags.releaseDraftOnly
-			? pkg.version
-			: cli.input.length > 0
-			? cli.input[0]
-			: undefined;
-
-		const branch = flags.branch ?? (await git.defaultBranch());
-		const options = await promptVersion(
-			{
-				...flags,
-				availability,
-				version,
-				runPublish,
-				branch,
-			},
-			pkg
-		);
-
-		if (!options.confirm) {
+		if (!promptResults.confirm) {
 			process.exit(0);
 		}
 
 		console.log(); // Prints a newline for readability
-		const newPkg = await lionp(options);
+		const newPkg = await lionp({ ...options, ...promptResults });
 
 		if (options.preview || options.releaseDraftOnly) {
 			return;

@@ -6,7 +6,7 @@ const gitTasks = (options: LionpOptions) => {
 	const tasks = [
 		{
 			title: 'Check current branch',
-			task: async () => git.verifyCurrentBranchIsReleaseBranch(options.branch!),
+			task: async () => git.verifyCurrentBranchIsReleaseBranch(options.branch),
 		},
 		{
 			title: 'Check local working tree',

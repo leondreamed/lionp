@@ -1,8 +1,11 @@
 import { packageDirectory } from 'pkg-dir';
 import { cosmiconfig } from 'cosmiconfig';
-import type { LionpOptions } from '~/types/options';
+import isScoped from 'is-scoped';
+import type { PackageJson } from 'type-fest';
+import githubUrlFromGit from 'github-url-from-git';
+import type { LionpConfig } from '~/types/config.js';
 
-export const getConfig = async (): Promise<LionpOptions> => {
+export async function getConfig(): Promise<Partial<LionpConfig>> {
 	const searchDir = await packageDirectory();
 	const searchPlaces = [
 		'.np-config.json',
@@ -17,5 +20,29 @@ export const getConfig = async (): Promise<LionpOptions> => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { config } = (await explorer.search(searchDir)) ?? {};
 
-	return config as LionpOptions;
-};
+	return config as LionpConfig;
+}
+
+const defConfig = <C extends LionpConfig>(c: C) => c;
+export function getDefaultConfig(pkg: PackageJson) {
+	const extraBaseUrls = ['gitlab.com'];
+	return defConfig({
+		build: true,
+		cleanup: true,
+		publish: true,
+		releaseDraft: true,
+		releaseDraftOnly: false,
+		preview: false,
+		anyBranch: false,
+		testScript: 'test',
+		buildScript: 'build',
+		version: 'patch',
+		publishScoped: isScoped(pkg.name!),
+		'2fa': true,
+		repoUrl:
+			pkg.repository &&
+			githubUrlFromGit((pkg.repository as { url: string }).url, {
+				extraBaseUrls,
+			}),
+	});
+}

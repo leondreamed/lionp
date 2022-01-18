@@ -1,26 +1,25 @@
 export type LionpOptions = {
-	releaseNotes: (tag: string) => string;
-	'2fa'?: boolean;
-	testScript?: string;
-	buildScript?: string;
-	version?: string;
-	preview?: boolean;
-	anyBranch?: boolean;
-	branch?: string;
-	runPublish?: boolean;
-	runBuild?: boolean;
+	'2fa': boolean;
+	testScript: string;
+	buildScript: string;
+	build: boolean;
+	version: string;
+	preview: boolean;
+	anyBranch: boolean;
+	branch: string;
 	message?: string;
 	tag?: string;
-	publishScoped?: boolean;
-	tests?: boolean;
-	otp?: string;
-	cleanup?: boolean;
+	publishScoped: boolean;
+	tests: boolean;
+	cleanup: boolean;
 	repoUrl?: string;
-	releaseDraft?: boolean;
-	releaseDraftOnly?: boolean;
-	availability?: {
+	releaseDraft: boolean;
+	releaseDraftOnly: boolean;
+	runPublish: boolean;
+	runBuild: boolean;
+	availability: {
 		isAvailable: boolean;
 		isUnknown: boolean;
 	};
-	publish?: boolean;
+	releaseNotes: (tag: string) => string | undefined;
 };

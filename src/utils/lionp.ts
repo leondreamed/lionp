@@ -21,12 +21,14 @@ import { enable2fa, getEnable2faArgs } from './npm/index.js';
 import type { LionpOptions } from '~/types/options.js';
 
 export async function lionp(options: LionpOptions) {
-	const version = options.version ?? 'patch';
 	const pkg = readPkg();
-	const testScript = options.testScript ?? 'test';
-	const buildScript = options.buildScript ?? 'build';
-	const runCleanup = options.cleanup;
-	const runTests = options.tests;
+	const {
+		version,
+		testScript,
+		buildScript,
+		tests: runTests,
+		cleanup: runCleanup,
+	} = options;
 	const rootDir = packageDirectorySync();
 	const pkgManager = 'pnpm';
 	const pkgManagerName = 'pnpm';
@@ -35,10 +37,8 @@ export async function lionp(options: LionpOptions) {
 		options.repoUrl === undefined
 			? false
 			: (hostedGitInfo.fromUrl(options.repoUrl) ?? {}).type === 'github';
-	const testCommand = options.testScript ? ['run', testScript] : [testScript];
-	const buildCommand = options.buildScript
-		? ['run', buildScript]
-		: [buildScript];
+	const testCommand = ['run', testScript];
+	const buildCommand = ['run', buildScript];
 	let publishStatus = 'UNKNOWN';
 	let pushedObjects: { pushed: string; reason: string } | undefined;
 
@@ -92,7 +92,7 @@ export async function lionp(options: LionpOptions) {
 		}
 	);
 
-	const tasks = new Listr(
+	const tasks = new Listr<{ otp: string }>(
 		[
 			{
 				task(ctx, task) {
@@ -103,7 +103,7 @@ export async function lionp(options: LionpOptions) {
 			},
 			{
 				title: 'Prerequisite check',
-				enabled: () => options.runPublish!,
+				enabled: () => options.runPublish,
 				task: () => prerequisiteTasks(version, pkg, options),
 			},
 			{
@@ -235,24 +235,27 @@ export async function lionp(options: LionpOptions) {
 		const isExternalRegistry = npm.isExternalRegistry(pkg);
 		if (
 			options['2fa'] &&
-			options.availability?.isAvailable &&
-			!options.availability?.isUnknown &&
+			options.availability.isAvailable &&
+			!options.availability.isUnknown &&
 			!pkg.private &&
 			!isExternalRegistry
 		) {
 			tasks.add([
 				{
 					title: 'Enabling two-factor authentication',
-					skip: () => {
+					skip: (context) => {
 						if (options.preview) {
-							const args = getEnable2faArgs(pkg.name, options);
+							const args = getEnable2faArgs(pkg.name, {
+								...options,
+								otp: context.otp,
+							});
 							return `[Preview] Command not executed: npm ${args.join(' ')}.`;
 						}
 
 						return false;
 					},
 					task: async (context, task) =>
-						enable2fa(task, pkg.name, { otp: context.otp as string }),
+						enable2fa(task, pkg.name, { otp: context.otp }),
 				},
 			]);
 		}

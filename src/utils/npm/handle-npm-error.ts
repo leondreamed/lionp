@@ -4,7 +4,7 @@ import type { ListrTaskWrapper } from 'listr2';
 
 export async function handleNpmError(
 	error: ExecaError,
-	task: ListrTaskWrapper<Record<never, never>, any>,
+	task: ListrTaskWrapper<{ otp: string }, any>,
 	message: string | ((opt: string) => Promise<unknown>),
 	executor?: (otp: string) => Promise<unknown>
 ): Promise<void> {
