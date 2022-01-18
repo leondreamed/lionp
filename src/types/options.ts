@@ -7,12 +7,12 @@ export type LionpOptions = {
 	preview: boolean;
 	anyBranch: boolean;
 	branch: string;
-	message?: string;
-	tag?: string;
+	message: string | undefined;
+	tag: string | undefined;
 	publishScoped: boolean;
 	tests: boolean;
 	cleanup: boolean;
-	repoUrl?: string;
+	repoUrl: string | undefined;
 	releaseDraft: boolean;
 	releaseDraftOnly: boolean;
 	runPublish: boolean;

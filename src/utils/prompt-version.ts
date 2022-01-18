@@ -19,7 +19,7 @@ type PromptVersionOptions = {
 	releaseDraftOnly: boolean;
 	branch: string;
 	repoUrl: string | undefined;
-	tag: string;
+	tag: string | undefined;
 	runPublish: boolean;
 	version: string;
 	availability: {
@@ -109,7 +109,7 @@ export async function promptVersion(
 			when: (answers: { customVersion: string; version: string }) =>
 				(isPrereleaseOrIncrement(answers.customVersion) ||
 					isPrereleaseOrIncrement(answers.version)) &&
-				!options.tag,
+				options.tag !== undefined,
 			choices: async () => {
 				const existingPrereleaseTags = await prereleaseTags(pkg.name!);
 
@@ -130,7 +130,7 @@ export async function promptVersion(
 			when: (answers: { customVersion: string; version: string }) =>
 				(isPrereleaseOrIncrement(answers.customVersion) ||
 					isPrereleaseOrIncrement(answers.version)) &&
-				!options.tag,
+				options.tag !== undefined,
 			validate: (input: string) => {
 				if (input.length === 0) {
 					return 'Please specify a tag, for example, `next`.';

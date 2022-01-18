@@ -20,7 +20,7 @@ const npmEnable2fa = (packageName: string, options: { otp: string }) =>
 	execa('npm', getEnable2faArgs(packageName, options));
 
 export async function enable2fa(
-	task: ListrTaskWrapper<Record<never, never>, any>,
+	task: ListrTaskWrapper<{ otp: string }, any>,
 	packageName: string,
 	options: { otp: string }
 ) {
