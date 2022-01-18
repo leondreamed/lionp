@@ -36,7 +36,6 @@ export function getDefaultConfig(pkg: PackageJson) {
 		anyBranch: false,
 		testScript: 'test',
 		buildScript: 'build',
-		version: 'patch',
 		publishScoped: isScoped(pkg.name!),
 		'2fa': true,
 		repoUrl:

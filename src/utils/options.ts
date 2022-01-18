@@ -4,19 +4,19 @@ import type { AnyFlags, Result } from 'meow';
 import { readPkg } from './util.js';
 import * as git from './git.js';
 import { isPackageNameAvailable } from './npm/npm.js';
-import type { LionpOptions } from '~/types/options.js';
+import type { PossiblyUnversionedLionpOptions } from '~/types/options.js';
 import type { DefaultConfig, LionpConfig } from '~/types/config.js';
 import type { LionpCliFlags } from '~/types/cli.js';
 
 export async function getLionpOptions(
 	config: LionpConfig & DefaultConfig & LionpCliFlags,
 	cli: Result<AnyFlags>
-): Promise<LionpOptions> {
+): Promise<PossiblyUnversionedLionpOptions> {
 	const pkg = readPkg();
 
 	const TBI: any = undefined; // Stands for "to be initialized"
 
-	const options: LionpOptions = {
+	const options: PossiblyUnversionedLionpOptions = {
 		...config,
 		runBuild: config.build,
 		runPublish: TBI,

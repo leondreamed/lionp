@@ -21,7 +21,7 @@ type PromptVersionOptions = {
 	repoUrl: string | undefined;
 	tag: string | undefined;
 	runPublish: boolean;
-	version: string;
+	version: string | undefined;
 	availability: {
 		isUnknown: boolean;
 		isAvailable: boolean;
@@ -31,11 +31,14 @@ type PromptVersionOptions = {
 export async function promptVersion(
 	options: PromptVersionOptions,
 	pkg: PackageJson
-): Promise<{
-	confirm: boolean;
-	version: string;
-	releaseNotes?: LionpOptions['releaseNotes'];
-}> {
+): Promise<
+	{
+		releaseNotes?: LionpOptions['releaseNotes'];
+	} & (
+		| { confirm: false; version: undefined }
+		| { confirm: true; version: string }
+	)
+> {
 	const oldVersion = pkg.version!;
 	validate(oldVersion);
 
@@ -161,15 +164,17 @@ export async function promptVersion(
 
 		if (!answers.confirm) {
 			return {
-				...options,
-				...answers,
+				version: undefined,
+				confirm: false,
 			};
 		}
 	}
 
-	if (options.version) {
+	// If the version is already specified, no need to prompt for it
+	if (options.version !== undefined) {
 		return {
 			...options,
+			version: options.version,
 			confirm: true,
 			releaseNotes,
 		};
@@ -187,8 +192,8 @@ export async function promptVersion(
 
 		if (!answers.confirm) {
 			return {
-				...options,
-				...answers,
+				version: undefined,
+				confirm: false,
 			};
 		}
 	}
@@ -208,8 +213,8 @@ export async function promptVersion(
 
 		if (!answers.confirm) {
 			return {
-				...options,
-				...answers,
+				version: undefined,
+				confirm: false,
 			};
 		}
 	}

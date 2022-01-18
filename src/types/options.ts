@@ -23,3 +23,7 @@ export type LionpOptions = {
 	};
 	releaseNotes: (tag: string) => string | undefined;
 };
+
+export type PossiblyUnversionedLionpOptions = Omit<LionpOptions, 'version'> & {
+	version: string | undefined;
+};
