@@ -92,7 +92,6 @@ export async function lionpCli() {
 		const defaultFlags: Partial<LionpOptions> = {
 			runBuild: true,
 			cleanup: true,
-			tests: true,
 			publish: true,
 			releaseDraft: true,
 			'2fa': true,
@@ -105,6 +104,8 @@ export async function lionpCli() {
 			...localConfig,
 			...cli.flags,
 		};
+
+		flags.tests = flags.tests ?? pkg.scripts?.[flags.testScript] !== undefined;
 
 		// Workaround for unintended auto-casing behavior from `meow`.
 		if ('2Fa' in flags) {
