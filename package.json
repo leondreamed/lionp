@@ -74,6 +74,7 @@
 		"is-interactive": "^2.0.0",
 		"is-scoped": "^3.0.0",
 		"issue-regex": "^4.0.0",
+		"lion-system": "^1.0.3",
 		"listr2": "^3.14.0",
 		"log-symbols": "^4.1.0",
 		"meow": "^10.1.2",

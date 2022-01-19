@@ -31,6 +31,7 @@ specifiers:
   issue-regex: ^4.0.0
   jest: ^27.4.7
   lint-staged: ^12.1.7
+  lion-system: ^1.0.3
   listr2: ^3.14.0
   log-symbols: ^4.1.0
   meow: ^10.1.2
@@ -72,6 +73,7 @@ dependencies:
   is-interactive: 2.0.0
   is-scoped: 3.0.0
   issue-regex: 4.0.0
+  lion-system: 1.0.3
   listr2: 3.14.0_enquirer@2.3.6
   log-symbols: 4.1.0
   meow: 10.1.2
@@ -4630,6 +4632,10 @@ packages:
     transitivePeerDependencies:
       - enquirer
     dev: true
+
+  /lion-system/1.0.3:
+    resolution: {integrity: sha512-/AKhJcAUYICvbQ15DCSwBPtdwyMogXKKpHtKHRtWmCiTC2D1NT+gTQe1g0NFu5uVVb0bqYiq6pgWk2iTw4XHsg==}
+    dev: false
 
   /listr2/3.14.0_enquirer@2.3.6:
     resolution: {integrity: sha512-TyWI8G99GX9GjE54cJ+RrNMcIFBfwMPxc3XTFiAYGN4s10hWROGtOg7+O6u6LE3mNkyld7RSLE6nrKBvTfcs3g==}
