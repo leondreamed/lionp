@@ -26,7 +26,7 @@
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^15.0.0",
-		"@leonzalion/configs": "^1.0.28",
+		"@leonzalion/configs": "^1.0.46",
 		"@types/async-exit-hook": "^2.0.0",
 		"@types/github-url-from-git": "^1.5.1",
 		"@types/hosted-git-info": "^3.0.2",
@@ -74,7 +74,7 @@
 		"is-interactive": "^2.0.0",
 		"is-scoped": "^3.0.0",
 		"issue-regex": "^4.0.0",
-		"lion-system": "^1.0.3",
+		"lion-system": "^1.0.9",
 		"listr2": "^3.14.0",
 		"log-symbols": "^4.1.0",
 		"meow": "^10.1.2",
