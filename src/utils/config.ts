@@ -37,7 +37,7 @@ export function getDefaultConfig(pkg: PackageJson) {
 		testScript: 'test',
 		buildScript: 'build',
 		publishScoped: isScoped(pkg.name!),
-		'2fa': true,
+		'2fa': false,
 		repoUrl:
 			pkg.repository &&
 			githubUrlFromGit((pkg.repository as { url: string }).url, {
