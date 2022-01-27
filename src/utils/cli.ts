@@ -94,7 +94,6 @@ export async function lionpCli() {
 		const defaultConfig = getDefaultConfig(pkg);
 		const localConfig = await getConfig();
 
-		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const config = {
 			...defaultConfig,
 			...localConfig,

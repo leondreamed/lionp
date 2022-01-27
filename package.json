@@ -53,7 +53,7 @@
 		"pre-push": "pnpm exec node-ts ./scripts/hooks/pre-push.ts"
 	},
 	"lint-staged": {
-		"*.{js,ts,vue}": [
+		"*.{js,ts}": [
 			"pnpm run lint",
 			"pnpm run prettier"
 		]
