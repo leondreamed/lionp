@@ -18,6 +18,19 @@ export const prerequisiteTasks = (
 
 	const tasks = [
 		{
+			title: 'Check publishConfig option',
+			task() {
+				if (
+					pkg.publishConfig === undefined ||
+					!('directory' in pkg.publishConfig)
+				) {
+					throw new Error(
+						'publishConfig.directory must be specified in your package.json file.'
+					);
+				}
+			},
+		},
+		{
 			title: 'Ping npm registry',
 			enabled: () => !pkg.private && !isExternalRegistry,
 			task: async () => npm.checkConnection(),
