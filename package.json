@@ -17,6 +17,7 @@
 		]
 	},
 	"scripts": {
+		"release": "pnpm start",
 		"prepare": "simple-git-hooks",
 		"start": "node-ts ./src/lionp.ts",
 		"build": "node-ts ./scripts/build.ts",
