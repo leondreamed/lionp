@@ -1,6 +1,13 @@
 {
 	"name": "lionp",
 	"version": "1.0.16",
+	"description": "A customized `npm publish` for my specific workflow.",
+	"repository": "leonzalion/lionp",
+	"author": {
+		"name": "Leon Si",
+		"email": "contact@leonzalion.com",
+		"url": "https://leonzalion.com"
+	},
 	"main": "lionp.js",
 	"type": "module",
 	"license": "MIT",
