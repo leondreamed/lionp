@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import type { AnyFlags, Result } from 'meow';
 import { readPkg } from './util.js';
 import * as git from './git.js';
@@ -19,11 +17,13 @@ export async function getLionpOptions(
 	const options: PossiblyUnversionedLionpOptions = {
 		...config,
 		runBuild: config.build,
+		/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 		runPublish: TBI,
 		branch: TBI,
 		version: TBI,
 		tests: TBI,
 		availability: TBI,
+		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 		releaseNotes: () => '',
 	};
 
