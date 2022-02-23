@@ -31,7 +31,7 @@
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^15.0.0",
-		"@leonzalion/configs": "^1.0.46",
+		"@leonzalion/configs": "^1.0.66",
 		"@types/async-exit-hook": "^2.0.0",
 		"@types/github-url-from-git": "^1.5.1",
 		"@types/hosted-git-info": "^3.0.2",

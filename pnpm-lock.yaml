@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@commitlint/cli': ^15.0.0
-  '@leonzalion/configs': ^1.0.46
+  '@leonzalion/configs': ^1.0.66
   '@types/async-exit-hook': ^2.0.0
   '@types/github-url-from-git': ^1.5.1
   '@types/hosted-git-info': ^3.0.2
@@ -92,7 +92,7 @@ dependencies:
 
 devDependencies:
   '@commitlint/cli': 15.0.0
-  '@leonzalion/configs': 1.0.46_06f392f38de45bec3f98fb34a8e2bdb5
+  '@leonzalion/configs': 1.0.66_06f392f38de45bec3f98fb34a8e2bdb5
   '@types/async-exit-hook': 2.0.0
   '@types/github-url-from-git': 1.5.1
   '@types/hosted-git-info': 3.0.2
@@ -855,8 +855,8 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@leonzalion/configs/1.0.46_06f392f38de45bec3f98fb34a8e2bdb5:
-    resolution: {integrity: sha512-jRZdqyObZf2u0EHMonUf0VxqrCpRIHq1Y6WFospoZ+Ls++ndkbaAAN6YPGnZobyy+CCiDsTVce/28V+Z7jr02w==}
+  /@leonzalion/configs/1.0.66_06f392f38de45bec3f98fb34a8e2bdb5:
+    resolution: {integrity: sha512-gsuXi10Kr2Y07IZtn4+5Ce7hRGN19nafYdHPi40gfnxrN21t4gwR6RG+OmOP4Q/NI8IJkLNTW+nIxU8fp47r8w==}
     hasBin: true
     peerDependencies:
       eslint: ^8.4.0
@@ -882,7 +882,10 @@ packages:
       eslint-plugin-simple-import-sort: 7.0.0_eslint@8.6.0
       eslint-plugin-unicorn: 39.0.0_eslint@8.6.0
       eslint-plugin-vue: 8.3.0_eslint@8.6.0
+      is-ci: 3.0.1
+      log-symbols: 4.1.0
       minimist: 1.2.5
+      pkg-up: 3.1.0
       ts-node: 10.4.0_28cf7dd3f8cd4c2f441c14a5ca83be61
       tsconfig-paths: 3.12.0
       xo: 0.47.0
@@ -3111,6 +3114,13 @@ packages:
       locate-path: 2.0.0
     dev: true
 
+  /find-up/3.0.0:
+    resolution: {integrity: sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==}
+    engines: {node: '>=6'}
+    dependencies:
+      locate-path: 3.0.0
+    dev: true
+
   /find-up/4.1.0:
     resolution: {integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==}
     engines: {node: '>=8'}
@@ -4711,6 +4721,14 @@ packages:
       path-exists: 3.0.0
     dev: true
 
+  /locate-path/3.0.0:
+    resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
+    engines: {node: '>=6'}
+    dependencies:
+      p-locate: 3.0.0
+      path-exists: 3.0.0
+    dev: true
+
   /locate-path/5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
     engines: {node: '>=8'}
@@ -5221,6 +5239,13 @@ packages:
       p-limit: 1.3.0
     dev: true
 
+  /p-locate/3.0.0:
+    resolution: {integrity: sha512-x+12w/To+4GFfgJhBEpiDcLozRJGegY+Ei7/z0tSLkMmxGZNybVMSfWj9aJn8Z5Fc7dBUNJOOVgPv2H7IwulSQ==}
+    engines: {node: '>=6'}
+    dependencies:
+      p-limit: 2.3.0
+    dev: true
+
   /p-locate/4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
     engines: {node: '>=8'}
@@ -5382,6 +5407,13 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       find-up: 6.2.0
+
+  /pkg-up/3.1.0:
+    resolution: {integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==}
+    engines: {node: '>=8'}
+    dependencies:
+      find-up: 3.0.0
+    dev: true
 
   /pkg-up/4.0.0:
     resolution: {integrity: sha512-N4zdA4sfOe6yCv+ulPCmpnIBQ5I60xfhDr1otdBBhKte9QtEf3bhfrfkW7dTb+IQ0iEx4ZDzas0kc1o5rdWpYg==}
