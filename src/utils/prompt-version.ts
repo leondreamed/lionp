@@ -9,7 +9,7 @@ import {
 	isPrereleaseOrIncrement,
 	createVersion,
 	isValidInput,
-	SEMVER_INCREMENTS,
+	getSemverIncrements,
 	validate,
 } from './version.js';
 import { printCommitLog } from './git.js';
@@ -67,9 +67,9 @@ export async function promptVersion(
 			type: 'list',
 			name: 'version',
 			message: 'Select semver increment or specify new version',
-			pageSize: SEMVER_INCREMENTS.length + 2,
+			pageSize: getSemverIncrements().length + 2,
 			choices: [
-				...SEMVER_INCREMENTS.map((inc) => ({
+				...getSemverIncrements().map((inc) => ({
 					name: `${inc} 	${prettyVersionDiff(oldVersion, inc)}`,
 					value: inc,
 				})),

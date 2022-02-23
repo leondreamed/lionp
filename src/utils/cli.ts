@@ -5,7 +5,7 @@ import type { Package } from 'update-notifier';
 import updateNotifier from 'update-notifier';
 import type { ExecaError } from 'execa';
 import { getConfig, getDefaultConfig } from './config.js';
-import { SEMVER_INCREMENTS } from './version.js';
+import { getSemverIncrements } from './version.js';
 import { readPkg } from './util.js';
 import { lionp } from './lionp.js';
 import { promptVersion } from './prompt-version.js';
@@ -19,7 +19,7 @@ export function getLionpCli() {
 	Usage
 	  $ lionp <version>
 	  Version can be:
-	    ${SEMVER_INCREMENTS.join(' | ')} | 1.2.3
+	    ${getSemverIncrements().join(' | ')} | 1.2.3
 	Options
 	  --any-branch           Allow publishing from any branch
 	  --branch               Name of the release branch (default: main | master)

@@ -2,7 +2,7 @@ import { Listr } from 'listr2';
 import * as git from './git.js';
 import type { LionpOptions } from '~/types/options.js';
 
-const gitTasks = (options: LionpOptions) => {
+export const gitTasks = (options: LionpOptions) => {
 	const tasks = [
 		{
 			title: 'Check current branch',
@@ -24,5 +24,3 @@ const gitTasks = (options: LionpOptions) => {
 
 	return new Listr(tasks);
 };
-
-export { gitTasks };

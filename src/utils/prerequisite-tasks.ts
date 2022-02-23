@@ -2,7 +2,7 @@ import process from 'node:process';
 import { Listr } from 'listr2';
 import type { PackageJson } from 'type-fest';
 import type { ReleaseType } from 'semver';
-import { createVersion, isValidInput, SEMVER_INCREMENTS } from './version.js';
+import { createVersion, isValidInput, getSemverIncrements } from './version.js';
 import * as git from './git.js';
 import * as npm from './npm/index.js';
 import { getTagVersionPrefix } from './util.js';
@@ -76,7 +76,7 @@ export const prerequisiteTasks = (
 			task: () => {
 				if (!isValidInput(input)) {
 					throw new Error(
-						`Version should be either ${SEMVER_INCREMENTS.join(
+						`Version should be either ${getSemverIncrements().join(
 							', '
 						)}, or a valid semver version.`
 					);

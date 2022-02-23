@@ -1,32 +1,39 @@
 import type { ReleaseType } from 'semver';
 import semver from 'semver';
 import { readPackageUpSync } from 'read-pkg-up';
+import onetime from 'onetime';
 
-export const SEMVER_INCREMENTS: ReleaseType[] = [
-	'patch',
-	'minor',
-	'major',
+export const getSemverIncrements = onetime(() => {
+	const semverIncrements: ReleaseType[] = [
+		'patch',
+		'minor',
+		'major',
+		'prepatch',
+		'preminor',
+		'premajor',
+		'prerelease',
+	];
+
+	return semverIncrements;
+});
+
+export const getPrereleaseVersions = onetime(() => [
 	'prepatch',
 	'preminor',
 	'premajor',
 	'prerelease',
-];
-export const PRERELEASE_VERSIONS = [
-	'prepatch',
-	'preminor',
-	'premajor',
-	'prerelease',
-];
+]);
 
 export const createVersion = (version: string) => new Version(version);
 
 export const isPrereleaseOrIncrement = (input: string) =>
-	createVersion(input).isPrerelease() || PRERELEASE_VERSIONS.includes(input);
+	createVersion(input).isPrerelease() ||
+	getPrereleaseVersions().includes(input);
 
 const isValidVersion = (input: string) => Boolean(semver.valid(input));
 
 export const isValidInput = (input: string) =>
-	SEMVER_INCREMENTS.includes(input as ReleaseType) || isValidVersion(input);
+	getSemverIncrements().includes(input as ReleaseType) || isValidVersion(input);
 
 export const validate = (version: string) => {
 	if (!isValidVersion(version)) {
@@ -67,15 +74,16 @@ export class Version {
 
 	getNewVersionFrom(input: string) {
 		validate(this.version);
+		const semverIncrements = getSemverIncrements();
 		if (!isValidInput(input)) {
 			throw new Error(
-				`Version should be either ${SEMVER_INCREMENTS.join(
+				`Version should be either ${semverIncrements.join(
 					', '
 				)} or a valid semver version.`
 			);
 		}
 
-		return SEMVER_INCREMENTS.includes(input as ReleaseType)
+		return semverIncrements.includes(input as ReleaseType)
 			? semver.inc(this.version, input as ReleaseType)
 			: input;
 	}
