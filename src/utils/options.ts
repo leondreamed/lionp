@@ -12,7 +12,7 @@ export async function getLionpOptions(
 ): Promise<PossiblyUnversionedLionpOptions> {
 	const pkg = readPkg();
 
-	const TBI: any = new Error('Not initialized.');
+	const TBI: any = undefined;
 
 	const options: PossiblyUnversionedLionpOptions = {
 		...config,
