@@ -93,7 +93,7 @@ export async function promptVersion(
 				isValidInput(input)
 					? createVersion(oldVersion).getNewVersionFrom(input)
 					: input,
-			validate: (input: string) => {
+			validate(input: string) {
 				if (!isValidInput(input)) {
 					return 'Please specify a valid semver, for example, `1.2.3`. See https://semver.org';
 				}
@@ -113,7 +113,7 @@ export async function promptVersion(
 				(isPrereleaseOrIncrement(answers.customVersion) ||
 					isPrereleaseOrIncrement(answers.version)) &&
 				options.tag !== undefined,
-			choices: async () => {
+			async choices() {
 				const existingPrereleaseTags = await prereleaseTags(pkg.name!);
 
 				return [
@@ -134,7 +134,7 @@ export async function promptVersion(
 				(isPrereleaseOrIncrement(answers.customVersion) ||
 					isPrereleaseOrIncrement(answers.version)) &&
 				options.tag !== undefined,
-			validate: (input: string) => {
+			validate(input: string) {
 				if (input.length === 0) {
 					return 'Please specify a tag, for example, `next`.';
 				}

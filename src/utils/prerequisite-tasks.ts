@@ -42,7 +42,7 @@ export const prerequisiteTasks = (
 		{
 			title: 'Verify user is authenticated',
 			enabled: () => process.env.NODE_ENV !== 'test' && !pkg.private,
-			task: async () => {
+			async task() {
 				const username = await npm.username({
 					externalRegistry: isExternalRegistry
 						? pkg.publishConfig?.registry
@@ -73,7 +73,7 @@ export const prerequisiteTasks = (
 		},
 		{
 			title: 'Validate version',
-			task: () => {
+			task() {
 				if (!isValidInput(input)) {
 					throw new Error(
 						`Version should be either ${getSemverIncrements().join(
@@ -95,7 +95,7 @@ export const prerequisiteTasks = (
 		},
 		{
 			title: 'Check for pre-release version',
-			task: () => {
+			task() {
 				if (
 					!pkg.private &&
 					createVersion(newVersion!).isPrerelease() &&
@@ -109,7 +109,7 @@ export const prerequisiteTasks = (
 		},
 		{
 			title: 'Check git tag existence',
-			task: async () => {
+			async task() {
 				await git.fetch();
 
 				const tagPrefix = await getTagVersionPrefix();

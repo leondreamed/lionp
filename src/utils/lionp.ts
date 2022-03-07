@@ -127,7 +127,7 @@ export async function lionp(options: LionpOptions) {
 			},
 			{
 				title: 'Installing dependencies using pnpm',
-				task: async () => {
+				async task() {
 					await execa('pnpm', [
 						'install',
 						'--frozen-lockfile',
@@ -142,7 +142,7 @@ export async function lionp(options: LionpOptions) {
 		tasks.add([
 			{
 				title: 'Running tests using pnpm',
-				task: async () => {
+				async task() {
 					await execa('pnpm', testCommand);
 				},
 			},
@@ -152,7 +152,7 @@ export async function lionp(options: LionpOptions) {
 	tasks.add([
 		{
 			title: 'Bumping version using pnpm',
-			skip: () => {
+			skip() {
 				if (options.preview) {
 					let previewText = `[Preview] Command not executed: npm version ${version}`;
 
@@ -168,7 +168,7 @@ export async function lionp(options: LionpOptions) {
 
 				return false;
 			},
-			task: () => {
+			task() {
 				const args = ['version', version];
 
 				if (options.message) {
@@ -184,7 +184,7 @@ export async function lionp(options: LionpOptions) {
 		tasks.add([
 			{
 				title: 'Running build using pnpm',
-				task: async () => {
+				async task() {
 					try {
 						await execa('pnpm', buildCommand);
 					} catch (error: unknown) {
@@ -203,7 +203,7 @@ export async function lionp(options: LionpOptions) {
 		tasks.add([
 			{
 				title: `Publishing package using ${pkgManagerName}`,
-				skip: () => {
+				skip() {
 					if (options.preview) {
 						const args = getPackagePublishArguments(options);
 						return `[Preview] Command not executed: ${pkgManager} ${args.join(
@@ -213,7 +213,7 @@ export async function lionp(options: LionpOptions) {
 
 					return false;
 				},
-				task: async (context, task) => {
+				async task(context, task) {
 					let hasError = false;
 
 					try {
@@ -243,7 +243,7 @@ export async function lionp(options: LionpOptions) {
 			tasks.add([
 				{
 					title: 'Enabling two-factor authentication',
-					skip: (context) => {
+					skip(context) {
 						if (options.preview) {
 							const args = getEnable2faArgs(pkg.name, {
 								...options,
@@ -265,7 +265,7 @@ export async function lionp(options: LionpOptions) {
 
 	tasks.add({
 		title: 'Pushing tags',
-		skip: async () => {
+		async skip() {
 			if (!(await git.hasUpstream())) {
 				return 'Upstream branch not found; not pushing.';
 			}
@@ -280,7 +280,7 @@ export async function lionp(options: LionpOptions) {
 
 			return false;
 		},
-		task: async () => {
+		async task() {
 			pushedObjects = await git.pushGraceful(isOnGitHub);
 		},
 	});
@@ -289,7 +289,7 @@ export async function lionp(options: LionpOptions) {
 		tasks.add({
 			title: 'Creating release draft on GitHub',
 			enabled: () => isOnGitHub,
-			skip: () => {
+			skip() {
 				if (options.preview) {
 					return '[Preview] GitHub Releases draft will not be opened in preview mode.';
 				}
