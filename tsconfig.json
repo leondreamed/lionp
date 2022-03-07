@@ -1,5 +1,5 @@
 {
-	"extends": "@leonzalion/configs/tsconfig/tsconfig.json",
+	"extends": "@leonzalion/configs/tsconfig.json",
 	"compilerOptions": {
 		"esModuleInterop": true,
 		"outDir": "dist",
@@ -12,6 +12,6 @@
 	},
 	"include": [
 		"./src",
-		"typings"
+		"./typings"
 	]
 }

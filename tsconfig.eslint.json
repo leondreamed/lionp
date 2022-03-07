@@ -4,8 +4,8 @@
 		"src",
 		"scripts",
 		"test",
-		"jest.config.mjs",
-		".markdownlint.js",
+		"vitest.config.ts",
+		".markdownlint.cjs",
 		".eslintrc.cjs"
 	]
 }
