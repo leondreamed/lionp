@@ -106,5 +106,8 @@
 	},
 	"publishConfig": {
 		"directory": "dist"
+	},
+	"lionp": {
+		"tests": false
 	}
 }
