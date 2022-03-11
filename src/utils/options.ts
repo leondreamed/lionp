@@ -15,7 +15,6 @@ export async function getLionpOptions(
 	const TBI: any = undefined;
 
 	const options: PossiblyUnversionedLionpOptions = {
-		...config,
 		runBuild: config.build,
 		/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 		runPublish: TBI,
@@ -24,6 +23,7 @@ export async function getLionpOptions(
 		tests: TBI,
 		availability: TBI,
 		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
+		...(config as Omit<typeof config, 'tests' | 'branch'>),
 		releaseNotes: () => '',
 	};
 
