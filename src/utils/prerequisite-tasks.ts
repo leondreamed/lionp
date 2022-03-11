@@ -2,6 +2,7 @@ import process from 'node:process';
 import { Listr } from 'listr2';
 import type { PackageJson } from 'type-fest';
 import type { ReleaseType } from 'semver';
+import Enquirer from 'enquirer';
 import { createVersion, isValidInput, getSemverIncrements } from './version.js';
 import * as git from './git.js';
 import * as npm from './npm/index.js';
@@ -119,5 +120,6 @@ export const prerequisiteTasks = (
 		},
 	];
 
-	return new Listr(tasks);
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	return new Listr(tasks, { injectWrapper: { enquirer: Enquirer as any } });
 };

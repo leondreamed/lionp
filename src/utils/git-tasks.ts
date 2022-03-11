@@ -1,4 +1,5 @@
 import { Listr } from 'listr2';
+import Enquirer from 'enquirer';
 import * as git from './git.js';
 import type { LionpOptions } from '~/types/options.js';
 
@@ -22,5 +23,6 @@ export const gitTasks = (options: LionpOptions) => {
 		tasks.shift();
 	}
 
-	return new Listr(tasks);
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	return new Listr(tasks, { injectWrapper: { enquirer: Enquirer as any } });
 };

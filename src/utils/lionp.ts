@@ -95,13 +95,6 @@ export async function lionp(options: LionpOptions) {
 	const tasks = new Listr<{ otp: string }>(
 		[
 			{
-				task(ctx, task) {
-					void task.prompt({
-						message: 'sus',
-					});
-				},
-			},
-			{
 				title: 'Prerequisite check',
 				enabled: () => options.runPublish,
 				task: () => prerequisiteTasks(version, pkg, options),
