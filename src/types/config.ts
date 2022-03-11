@@ -22,6 +22,6 @@ export type LionpConfig = Partial<{
 
 export type DefaultConfig = {
 	[K in keyof ReturnType<typeof getDefaultConfig>]: undefined extends K
-		? K
+		? ReturnType<typeof getDefaultConfig>[K]
 		: NonNullable<LionpConfig[K]>;
 };

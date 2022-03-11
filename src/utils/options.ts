@@ -23,7 +23,7 @@ export async function getLionpOptions(
 		tests: TBI,
 		availability: TBI,
 		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
-		...(config as Omit<typeof config, 'tests' | 'branch'>),
+		...(config as Omit<typeof config, 'branch' | 'tests'>),
 		releaseNotes: () => '',
 	};
 
