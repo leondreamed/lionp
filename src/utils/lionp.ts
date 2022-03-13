@@ -42,6 +42,7 @@ export async function lionp(options: LionpOptions) {
 	const buildCommand = ['run', buildScript];
 	let publishStatus = 'UNKNOWN';
 	let pushedObjects: { pushed: string; reason: string } | undefined;
+	const isRepoRoot = fs.existsSync(path.resolve(rootDir, '.git'));
 
 	const rollback = onetime(async () => {
 		console.log('\nPublish failed. Rolling back to the previous state…');
@@ -179,7 +180,7 @@ export async function lionp(options: LionpOptions) {
 				await execa('git', ['commit', '-m', newVersion]);
 
 				// If the folder is a .git folder, then create the tag
-				if (fs.existsSync('.git')) {
+				if (isRepoRoot) {
 					await execa('git', ['tag', newVersion]);
 				}
 			},
@@ -291,7 +292,7 @@ export async function lionp(options: LionpOptions) {
 		},
 	});
 
-	if (options.releaseDraft) {
+	if (options.releaseDraft && isRepoRoot) {
 		tasks.add({
 			title: 'Creating release draft on GitHub',
 			enabled: () => isOnGitHub,
