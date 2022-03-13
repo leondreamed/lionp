@@ -19,6 +19,7 @@ import { getPackagePublishArguments, publish } from './npm/publish.js';
 import { releaseTaskHelper } from './release-task-helper.js';
 import { enable2fa, getEnable2faArgs } from './npm/index.js';
 import type { LionpOptions } from '~/types/options.js';
+import { createVersion } from '~/utils/version.js';
 
 export async function lionp(options: LionpOptions) {
 	const pkg = readPkg();
@@ -161,14 +162,26 @@ export async function lionp(options: LionpOptions) {
 
 				return false;
 			},
-			task() {
-				const args = ['version', version];
+			async task() {
+				// We'll tag the version manually
+				const args = ['version', version, '--no-git-tag-version'];
 
 				if (options.message) {
 					args.push('--message', options.message);
 				}
 
-				return execa('pnpm', args);
+				const newVersion = createVersion(pkg.version).getNewVersionFrom(
+					options.version
+				)!;
+
+				await execa('pnpm', args);
+				await execa('git', ['add', 'package.json']);
+				await execa('git', ['commit', '-m', newVersion]);
+
+				// If the folder is a .git folder, then create the tag
+				if (fs.existsSync('.git')) {
+					await execa('git', ['tag', newVersion]);
+				}
 			},
 		},
 	]);
