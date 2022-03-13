@@ -45,17 +45,17 @@ export async function lionp(options: LionpOptions) {
 	const rollback = onetime(async () => {
 		console.log('\nPublish failed. Rolling back to the previous state…');
 
-		const tagVersionPrefix = await getTagVersionPrefix();
-
-		const latestTag = await git.latestTag();
-		const versionInLatestTag = latestTag.slice(tagVersionPrefix.length);
-
 		try {
+			const tagVersionPrefix = await getTagVersionPrefix();
+
+			const latestTag = await git.latestTag();
+			const versionInLatestTag = latestTag.slice(tagVersionPrefix.length);
+
+			// Verify that the package's version has been bumped before deleting the last tag and commit.
 			if (
 				versionInLatestTag === readPkg().version &&
 				versionInLatestTag !== pkg.version
 			) {
-				// Verify that the package's version has been bumped before deleting the last tag and commit.
 				await git.deleteTag(latestTag);
 				await git.removeLastCommit();
 			}
