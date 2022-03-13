@@ -1,6 +1,6 @@
 {
 	"name": "lionp",
-	"version": "1.0.21",
+	"version": "1.0.22",
 	"description": "A customized `npm publish` for my specific workflow.",
 	"repository": {
 		"type": "git",
