@@ -184,14 +184,23 @@ function npmignoreExistsInPackageRootDir() {
 	return fs.existsSync(path.resolve(rootDir, '.npmignore'));
 }
 
+function excludeGitAndNodeModulesPaths(singlePath: string) {
+	return (
+		!singlePath.startsWith('.git/') && !singlePath.startsWith('node_modules/')
+	);
+}
+
 async function getFilesIgnoredByDotnpmignore(
 	pkg: PackageJson,
 	fileList: string[]
 ) {
-	const allowList = await ignoreWalker({
+	let allowList = await ignoreWalker({
 		path: packageDirectorySync(),
 		ignoreFiles: ['.npmignore'],
 	});
+	allowList = allowList.filter((singlePath) =>
+		excludeGitAndNodeModulesPaths(singlePath)
+	);
 	return fileList.filter(
 		minimatch.filter(getIgnoredFilesGlob(allowList, pkg.directories!), {
 			matchBase: true,
@@ -201,8 +210,17 @@ async function getFilesIgnoredByDotnpmignore(
 }
 
 function filterFileList(globArray: string[], fileList: string[]) {
+	if (globArray.length === 0) {
+		return [];
+	}
+
 	const globString =
-		globArray.length > 1 ? `{${globArray.join(',')}}` : globArray[0]!;
+		globArray.length > 1
+			? `{${globArray
+					.filter((singlePath) => excludeGitAndNodeModulesPaths(singlePath))
+					.join(',')}}`
+			: globArray[0]!;
+
 	return fileList.filter(
 		// eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
 		minimatch.filter(globString, { matchBase: true, dot: true })

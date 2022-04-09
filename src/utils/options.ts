@@ -7,14 +7,14 @@ import type { DefaultConfig, LionpConfig } from '~/types/config.js';
 import type { LionpCliFlags } from '~/types/cli.js';
 
 export async function getLionpOptions(
-	config: LionpConfig & DefaultConfig & LionpCliFlags,
+	config: Partial<LionpConfig> & DefaultConfig & Partial<LionpCliFlags>,
 	cli: Result<AnyFlags>
 ): Promise<PossiblyUnversionedLionpOptions> {
 	const pkg = readPkg();
 
 	const TBI: any = undefined;
 
-	const options: PossiblyUnversionedLionpOptions = {
+	const options = {
 		runBuild: config.build,
 		/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 		runPublish: TBI,
@@ -25,7 +25,7 @@ export async function getLionpOptions(
 		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 		...(config as Omit<typeof config, 'branch' | 'tests'>),
 		releaseNotes: () => '',
-	};
+	} as PossiblyUnversionedLionpOptions;
 
 	options.runPublish =
 		!config.releaseDraftOnly && config.publish && !pkg.private;

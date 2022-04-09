@@ -21,12 +21,14 @@ export const releaseTaskHelper = async (
 
 	const changelog = await genChangelog();
 
-	const url = newGithubReleaseUrl({
-		repoUrl: options.repoUrl!,
-		tag,
-		body: changelog,
-		isPrerelease: isPreRelease,
-	});
+	if (options.repoUrl !== undefined) {
+		const url = newGithubReleaseUrl({
+			repoUrl: options.repoUrl,
+			tag,
+			body: changelog,
+			isPrerelease: isPreRelease,
+		});
 
-	await open(url);
+		await open(url);
+	}
 };

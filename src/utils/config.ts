@@ -26,6 +26,14 @@ export async function getConfig(): Promise<Partial<LionpConfig>> {
 const defConfig = <C extends LionpConfig>(c: C) => c;
 export function getDefaultConfig(pkg: PackageJson) {
 	const extraBaseUrls = ['gitlab.com'];
+
+	const repoUrl =
+		pkg.repository === undefined
+			? undefined
+			: githubUrlFromGit((pkg.repository as { url: string }).url, {
+					extraBaseUrls,
+			  });
+
 	return defConfig({
 		build: true,
 		cleanup: true,
@@ -38,10 +46,6 @@ export function getDefaultConfig(pkg: PackageJson) {
 		buildScript: 'build',
 		publishScoped: isScoped(pkg.name!),
 		'2fa': false,
-		repoUrl:
-			pkg.repository &&
-			githubUrlFromGit((pkg.repository as { url: string }).url, {
-				extraBaseUrls,
-			}),
+		repoUrl,
 	});
 }
