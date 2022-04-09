@@ -37,7 +37,7 @@ export async function lionp(options: LionpOptions) {
 	const isOnGitHub =
 		options.repoUrl === undefined
 			? false
-			: (hostedGitInfo.fromUrl(options.repoUrl) ?? {}).type === 'github';
+			: hostedGitInfo.fromUrl(options.repoUrl)?.type === 'github';
 	const testCommand = ['run', testScript];
 	const buildCommand = ['run', buildScript];
 	let publishStatus = 'UNKNOWN';

@@ -4,6 +4,7 @@ import type { PackageJson } from 'type-fest';
 import { getTagVersionPrefix, getPreReleasePrefix } from './util.js';
 import { createVersion } from './version.js';
 import type { LionpOptions } from '~/types/options.js';
+import { genChangelog } from '~/utils/changelog.js';
 
 export const releaseTaskHelper = async (
 	options: LionpOptions,
@@ -18,10 +19,12 @@ export const releaseTaskHelper = async (
 		tag += await getPreReleasePrefix();
 	}
 
+	const changelog = await genChangelog();
+
 	const url = newGithubReleaseUrl({
 		repoUrl: options.repoUrl!,
 		tag,
-		body: options.releaseNotes === undefined ? '' : options.releaseNotes(tag),
+		body: changelog,
 		isPrerelease: isPreRelease,
 	});
 

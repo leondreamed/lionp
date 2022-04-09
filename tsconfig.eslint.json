@@ -5,7 +5,7 @@
 		"scripts",
 		"test",
 		"vitest.config.ts",
-		".markdownlint.cjs",
+		"npm-binary.config.cjs",
 		".eslintrc.cjs"
 	]
 }

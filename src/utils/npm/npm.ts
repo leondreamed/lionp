@@ -120,7 +120,7 @@ export const prereleaseTags = async (packageName: string) => {
 		tags = Object.keys(JSON.parse(stdout)).filter((tag) => tag !== 'latest');
 	} catch (error: unknown) {
 		const err = error as ExecaError;
-		if (((JSON.parse(err.stdout) || {}).error || {}).code !== 'E404') {
+		if (JSON.parse(err.stdout)?.error?.code !== 'E404') {
 			throw error;
 		}
 	}
