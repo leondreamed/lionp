@@ -1,6 +1,6 @@
 # lionp
 
-[![npm version](https://badge.fury.io/js/lionp.svg)](https://badge.fury.io/js/lionp)
+[![npm version](https://img.shields.io/npm/v/lionp)](https://npmjs.com/package/lionp)
 
 A fork of [np](https://github.com/sindresorhus/np) customized for my personal publish workflow:
 
