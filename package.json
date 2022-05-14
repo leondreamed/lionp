@@ -21,6 +21,7 @@
 	"scripts": {
 		"prepare": "lion-git-hooks",
 		"start": "node-ts ./src/bin/lionp.ts",
+		"release": "pnpm start",
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {
