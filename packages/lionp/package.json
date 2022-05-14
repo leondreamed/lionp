@@ -19,7 +19,9 @@
 		"lionp": "./bin/lionp.js"
 	},
 	"scripts": {
+		"test": "vitest run",
 		"prepare": "lion-git-hooks",
+		"preinstall": "pnpm build",
 		"start": "node-ts ./src/bin/lionp.ts",
 		"release": "pnpm start",
 		"build": "node-ts ./scripts/build.ts"
@@ -46,7 +48,7 @@
 		"meow": "^10.1.2",
 		"minimatch": "^5.0.1",
 		"new-github-release-url": "^2.0.0",
-		"npm-binary": "^0.2.0",
+		"npm-binary": "^0.3.0",
 		"npm-name": "^6.0.1",
 		"onetime": "^6.0.0",
 		"open": "^8.4.0",
@@ -61,7 +63,6 @@
 		"update-notifier": "^5.1.0"
 	},
 	"devDependencies": {
-		"@leonzalion/configs": "^1.4.21",
 		"@types/async-exit-hook": "^2.0.0",
 		"@types/github-url-from-git": "^1.5.1",
 		"@types/hosted-git-info": "^3.0.2",
@@ -73,13 +74,14 @@
 		"@types/sinon": "^10.0.11",
 		"@types/update-notifier": "^5.1.0",
 		"desm": "^1.2.0",
+		"lion-fixture": "^1.1.4",
 		"sinon": "^13.0.2",
 		"typescript": "^4.6.4",
 		"vitest": "^0.12.6"
 	},
 	"engines": {
 		"node": ">=10",
-		"npm": ">=6.8.0",
+		"npm": ">=7.0.0",
 		"git": ">=2.11.0"
 	},
 	"publishConfig": {

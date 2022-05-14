@@ -1,0 +1,7 @@
+{
+	"name": "@lionp-fixtures/changelog",
+	"type": "module",
+	"dependencies": {
+		"lionp": "link:../../../dist"
+	}
+}
