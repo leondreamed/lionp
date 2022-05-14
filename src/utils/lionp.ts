@@ -40,8 +40,15 @@ export async function lionp(options: LionpOptions) {
 		options.repoUrl === undefined
 			? false
 			: hostedGitInfo.fromUrl(options.repoUrl)?.type === 'github';
-	const testCommand = ['run', testScript];
-	const buildCommand = ['run', buildScript];
+
+	const testCommand = [
+		pkg.scripts?.test === undefined ? 'exec' : 'run',
+		testScript,
+	];
+	const buildCommand = [
+		pkg.scripts?.build === undefined ? 'exec' : 'run',
+		buildScript,
+	];
 	let publishStatus = 'UNKNOWN';
 	let pushedObjects: { pushed: string; reason: string } | undefined;
 	const isRepoRoot = fs.existsSync(path.resolve(rootDir, '.git'));
