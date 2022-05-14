@@ -1,5 +1,5 @@
-import { getBinaryPath } from 'npm-binary';
 import { execa } from 'execa';
+import { getBinaryPath } from 'npm-binary';
 
 export async function genChangelog() {
 	const gitCliffPath = getBinaryPath('git-cliff', import.meta.url);

@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import type { ReleaseType } from 'semver';
+
 import { createVersion } from './version.js';
 
 export function prettyVersionDiff(oldVersion: string, inc: ReleaseType) {

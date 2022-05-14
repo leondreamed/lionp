@@ -1,10 +1,12 @@
 import type { AnyFlags, Result } from 'meow';
-import { readPkg } from './util.js';
+
+import type { LionpCliFlags } from '~/types/cli.js';
+import type { DefaultConfig, LionpConfig } from '~/types/config.js';
+import type { PossiblyUnversionedLionpOptions } from '~/types/options.js';
+
 import * as git from './git.js';
 import { isPackageNameAvailable } from './npm/npm.js';
-import type { PossiblyUnversionedLionpOptions } from '~/types/options.js';
-import type { DefaultConfig, LionpConfig } from '~/types/config.js';
-import type { LionpCliFlags } from '~/types/cli.js';
+import { readPkg } from './util.js';
 
 export async function getLionpOptions(
 	config: Partial<LionpConfig> & DefaultConfig & Partial<LionpCliFlags>,

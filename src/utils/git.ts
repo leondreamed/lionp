@@ -1,13 +1,14 @@
+import chalk from 'chalk';
+import { htmlEscape } from 'escape-goat';
+import escapeStringRegexp from 'escape-string-regexp';
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
-import escapeStringRegexp from 'escape-string-regexp';
 import ignoreWalker from 'ignore-walk';
 import { packageDirectorySync } from 'pkg-dir';
-import { htmlEscape } from 'escape-goat';
-import chalk from 'chalk';
-import { verifyRequirementSatisfied } from './version.js';
+
 import * as git from './git.js';
 import * as util from './util.js';
+import { verifyRequirementSatisfied } from './version.js';
 
 export const latestTag = async () => {
 	const { stdout } = await execa('git', ['describe', '--abbrev=0', '--tags']);

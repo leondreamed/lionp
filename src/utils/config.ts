@@ -1,8 +1,9 @@
-import { packageDirectory } from 'pkg-dir';
 import { cosmiconfig } from 'cosmiconfig';
-import isScoped from 'is-scoped';
-import type { PackageJson } from 'type-fest';
 import githubUrlFromGit from 'github-url-from-git';
+import isScoped from 'is-scoped';
+import { packageDirectory } from 'pkg-dir';
+import type { PackageJson } from 'type-fest';
+
 import type { LionpConfig } from '~/types/config.js';
 
 export async function getConfig(): Promise<Partial<LionpConfig>> {

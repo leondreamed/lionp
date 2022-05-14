@@ -1,10 +1,11 @@
-import { test, afterEach, expect } from 'vitest';
 import { createSandbox } from 'sinon';
 import terminalLink from 'terminal-link';
+import { afterEach, expect,test } from 'vitest';
+
 import {
-	linkifyIssues,
 	linkifyCommit,
 	linkifyCommitRange,
+	linkifyIssues,
 } from '~/utils/util.js';
 
 const MOCK_REPO_URL = 'https://github.com/unicorn/rainbow';

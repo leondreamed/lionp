@@ -1,7 +1,7 @@
-import { test } from 'vitest';
-
 import execaStub from 'execa_test_double';
 import mockery from 'mockery';
+import { test } from 'vitest';
+
 import { SilentRenderer } from './fixtures/listr-renderer';
 
 let testedModule;

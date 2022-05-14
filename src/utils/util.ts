@@ -1,10 +1,11 @@
-import { readPackageUpSync } from 'read-pkg-up';
+import { execa } from 'execa';
 import issueRegex from 'issue-regex';
-import terminalLink from 'terminal-link';
 import pMemoize from 'p-memoize';
 import { packageDirectorySync } from 'pkg-dir';
-import { execa } from 'execa';
+import { readPackageUpSync } from 'read-pkg-up';
+import terminalLink from 'terminal-link';
 import type { PackageJson } from 'type-fest';
+
 import * as git from './git.js';
 import * as npm from './npm/index.js';
 

@@ -1,7 +1,7 @@
+import onetime from 'onetime';
+import { readPackageUpSync } from 'read-pkg-up';
 import type { ReleaseType } from 'semver';
 import semver from 'semver';
-import { readPackageUpSync } from 'read-pkg-up';
-import onetime from 'onetime';
 
 export const getSemverIncrements = onetime(() => {
 	const semverIncrements: ReleaseType[] = [

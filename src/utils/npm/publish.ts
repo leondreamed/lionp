@@ -1,8 +1,10 @@
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
 import type { ListrTaskWrapper } from 'listr2';
-import { handleNpmError } from './handle-npm-error.js';
+
 import type { LionpOptions } from '~/types/options';
+
+import { handleNpmError } from './handle-npm-error.js';
 
 export const getPackagePublishArguments = (
 	options: LionpOptions & { otp?: string }

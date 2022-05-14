@@ -1,5 +1,5 @@
-import path from 'path';
-import { test, expect } from 'vitest';
+import path from 'node:path';
+import { expect,test } from 'vitest';
 
 const newFiles = [
 	'source/ignore.txt',

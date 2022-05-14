@@ -1,15 +1,16 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import ignoreWalker from 'ignore-walk';
-import type { Options } from 'npm-name';
-import npmName from 'npm-name';
-import minimatch from 'minimatch';
+import chalk from 'chalk';
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
-import chalk from 'chalk';
+import ignoreWalker from 'ignore-walk';
+import minimatch from 'minimatch';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import type { Options } from 'npm-name';
+import npmName from 'npm-name';
 import pTimeout from 'p-timeout';
-import type { PackageJson } from 'type-fest';
 import { packageDirectorySync } from 'pkg-dir';
+import type { PackageJson } from 'type-fest';
+
 import { verifyRequirementSatisfied } from '../version.js';
 
 export const isExternalRegistry = (

@@ -1,6 +1,7 @@
 import test from 'ava';
 import execaStub from 'execa_test_double';
 import mockery from 'mockery';
+
 import version from '../source/version';
 import {SilentRenderer} from './fixtures/listr-renderer';
 

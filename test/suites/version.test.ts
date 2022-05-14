@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+
 import * as version from '~/utils/version.js';
 
 test('version.SEMVER_INCREMENTS', () => {

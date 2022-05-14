@@ -1,7 +1,9 @@
-import { Listr } from 'listr2';
 import Enquirer from 'enquirer';
-import * as git from './git.js';
+import { Listr } from 'listr2';
+
 import type { LionpOptions } from '~/types/options.js';
+
+import * as git from './git.js';
 
 export const gitTasks = (options: LionpOptions) => {
 	const tasks = [

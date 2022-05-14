@@ -1,13 +1,15 @@
-import process from 'node:process';
-import { Listr } from 'listr2';
-import type { PackageJson } from 'type-fest';
-import type { ReleaseType } from 'semver';
 import Enquirer from 'enquirer';
-import { createVersion, isValidInput, getSemverIncrements } from './version.js';
+import { Listr } from 'listr2';
+import process from 'node:process';
+import type { ReleaseType } from 'semver';
+import type { PackageJson } from 'type-fest';
+
+import type { LionpOptions } from '~/types/options';
+
 import * as git from './git.js';
 import * as npm from './npm/index.js';
 import { getTagVersionPrefix } from './util.js';
-import type { LionpOptions } from '~/types/options';
+import { createVersion, getSemverIncrements, isValidInput } from './version.js';
 
 export const prerequisiteTasks = (
 	input: string,

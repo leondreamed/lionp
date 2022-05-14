@@ -1,17 +1,19 @@
-import process from 'node:process';
+import type { ExecaError } from 'execa';
 import logSymbols from 'log-symbols';
 import meow from 'meow';
+import process from 'node:process';
 import type { Package } from 'update-notifier';
 import updateNotifier from 'update-notifier';
-import type { ExecaError } from 'execa';
-import { getConfig, getDefaultConfig } from './config.js';
-import { getSemverIncrements } from './version.js';
-import { readPkg } from './util.js';
-import { lionp } from './lionp.js';
-import { promptVersion } from './prompt-version.js';
-import { getLionpOptions } from './options.js';
-import type { DefaultConfig, LionpConfig } from '~/types/config.js';
+
 import type { LionpCliFlags } from '~/types/cli.js';
+import type { DefaultConfig, LionpConfig } from '~/types/config.js';
+
+import { getConfig, getDefaultConfig } from './config.js';
+import { lionp } from './lionp.js';
+import { getLionpOptions } from './options.js';
+import { promptVersion } from './prompt-version.js';
+import { readPkg } from './util.js';
+import { getSemverIncrements } from './version.js';
 
 export function getLionpCli() {
 	return meow(

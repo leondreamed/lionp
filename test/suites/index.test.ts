@@ -1,5 +1,6 @@
-import { test, expect } from 'vitest';
 import * as sinon from 'sinon';
+import { expect,test } from 'vitest';
+
 import lionp from '~/index.js';
 import { getDefaultConfig } from '~/utils/config.js';
 import { getLionpOptions } from '~/utils/options.js';

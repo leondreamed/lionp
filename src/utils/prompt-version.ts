@@ -1,19 +1,21 @@
+import chalk from 'chalk';
 import inquirer from 'inquirer';
+import isScoped from 'is-scoped';
 import type { ReleaseType } from 'semver';
 import type { PackageJson } from 'type-fest';
-import chalk from 'chalk';
-import isScoped from 'is-scoped';
+
+import type { LionpOptions } from '~/types/options.js';
+
+import { printCommitLog } from './git.js';
 import { getRegistryUrl, prereleaseTags } from './npm/index.js';
 import { prettyVersionDiff } from './pretty-version-diff.js';
 import {
-	isPrereleaseOrIncrement,
 	createVersion,
-	isValidInput,
 	getSemverIncrements,
+	isPrereleaseOrIncrement,
+	isValidInput,
 	validate,
 } from './version.js';
-import { printCommitLog } from './git.js';
-import type { LionpOptions } from '~/types/options.js';
 
 type PromptVersionOptions = {
 	releaseDraftOnly: boolean;
