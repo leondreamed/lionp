@@ -38,10 +38,6 @@ export async function getLionpOptions(
 		? cli.input[0]!
 		: config.version;
 
-	if (options.tests === undefined) {
-		options.tests = pkg.scripts?.[config.testScript] !== undefined;
-	}
-
 	options.availability = config.publish
 		? await isPackageNameAvailable(pkg)
 		: {

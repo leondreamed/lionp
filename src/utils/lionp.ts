@@ -1,25 +1,27 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import { Listr } from 'listr2';
+import exitHook from 'async-exit-hook';
+import del from 'del';
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
 import hostedGitInfo from 'hosted-git-info';
-import { packageDirectorySync } from 'pkg-dir';
-import onetime from 'onetime';
-import exitHook from 'async-exit-hook';
-import del from 'del';
+import { Listr } from 'listr2';
 import logSymbols from 'log-symbols';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import onetime from 'onetime';
+import { packageDirectorySync } from 'pkg-dir';
 import { readPackageUp } from 'read-pkg-up';
-import * as npm from './npm/index.js';
-import { getTagVersionPrefix, readPkg } from './util.js';
-import * as git from './git.js';
-import { prerequisiteTasks } from './prerequisite-tasks.js';
-import { gitTasks } from './git-tasks.js';
-import { getPackagePublishArguments, publish } from './npm/publish.js';
-import { releaseTaskHelper } from './release-task-helper.js';
-import { enable2fa, getEnable2faArgs } from './npm/index.js';
+
 import type { LionpOptions } from '~/types/options.js';
 import { createVersion } from '~/utils/version.js';
+
+import * as git from './git.js';
+import { gitTasks } from './git-tasks.js';
+import * as npm from './npm/index.js';
+import { enable2fa, getEnable2faArgs } from './npm/index.js';
+import { getPackagePublishArguments, publish } from './npm/publish.js';
+import { prerequisiteTasks } from './prerequisite-tasks.js';
+import { releaseTaskHelper } from './release-task-helper.js';
+import { getTagVersionPrefix, readPkg } from './util.js';
 
 export async function lionp(options: LionpOptions) {
 	const pkg = readPkg();

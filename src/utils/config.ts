@@ -38,6 +38,7 @@ export function getDefaultConfig(pkg: PackageJson) {
 		build: true,
 		cleanup: true,
 		publish: true,
+		tests: true,
 		releaseDraft: true,
 		releaseDraftOnly: false,
 		preview: false,
