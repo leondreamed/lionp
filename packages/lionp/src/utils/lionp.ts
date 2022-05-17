@@ -301,7 +301,7 @@ export async function lionp(options: LionpOptions) {
 		},
 	});
 
-	if (options.releaseDraft && isRepoRoot) {
+	if (options.releaseDraft) {
 		tasks.add({
 			title: 'Creating release draft on GitHub',
 			enabled: () => isOnGitHub,

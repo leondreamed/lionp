@@ -1,7 +1,8 @@
 {
 	"name": "@lionp/monorepo",
 	"scripts": {
-		"prepare": "lion-git-hooks"
+		"prepare": "lion-git-hooks",
+		"release": "pnpm --filter=lionp run release"
 	},
 	"devDependencies": {
 		"lionconfig": "^1.6.25",
