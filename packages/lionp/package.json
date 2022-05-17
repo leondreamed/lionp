@@ -19,8 +19,6 @@
 		"lionp": "./bin/lionp.js"
 	},
 	"scripts": {
-		"test": "vitest run",
-		"prepare": "lion-git-hooks",
 		"preinstall": "pnpm build",
 		"start": "node-ts ./src/bin/lionp.ts",
 		"release": "pnpm start",

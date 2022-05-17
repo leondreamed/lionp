@@ -1,3 +1,4 @@
-import { genChangelog } from 'lionp/utils/changelog.js'
+import { genChangelog } from 'lionp/utils/changelog.js';
+import process from 'node:process';
 
-console.log(await genChangelog());
+process.stdout.write(await genChangelog());
