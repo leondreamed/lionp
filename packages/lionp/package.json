@@ -21,7 +21,7 @@
 	"scripts": {
 		"preinstall": "pnpm build",
 		"start": "node-ts ./src/bin/lionp.ts",
-		"release": "pnpm start",
+		"release": "pnpm build && ./dist/bin/lionp.js",
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {
