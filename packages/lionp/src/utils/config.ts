@@ -2,7 +2,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import githubUrlFromGit from 'github-url-from-git';
 import isScoped from 'is-scoped';
 import { packageDirectory } from 'pkg-dir';
-import type { PackageJson } from 'type-fest';
+import type { NormalizedPackageJson } from 'read-pkg-up';
 
 import type { LionpConfig } from '~/types/config.js';
 
@@ -25,7 +25,7 @@ export async function getConfig(): Promise<Partial<LionpConfig>> {
 }
 
 const defConfig = <C extends LionpConfig>(c: C) => c;
-export function getDefaultConfig(pkg: PackageJson) {
+export function getDefaultConfig(pkg: NormalizedPackageJson) {
 	const extraBaseUrls = ['gitlab.com'];
 
 	const repoUrl =
@@ -46,7 +46,7 @@ export function getDefaultConfig(pkg: PackageJson) {
 		anyBranch: false,
 		testScript: 'test',
 		buildScript: 'build',
-		publishScoped: isScoped(pkg.name!),
+		publishScoped: isScoped(pkg.name),
 		'2fa': false,
 		repoUrl,
 	});

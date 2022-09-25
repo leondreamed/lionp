@@ -1,18 +1,19 @@
+import * as path from 'node:path';
+
 import { execa } from 'execa';
 import { findUpSync } from 'find-up';
-import * as path from 'node:path';
 import { getBinaryPath } from 'npm-binary';
 
-interface CommitInfo {
+type CommitInfo = {
 	id: string;
 	message: string;
 	group: string | null;
 	scope: string | null;
 	links: string[];
 	conventional: boolean;
-}
+};
 
-interface GitCliffVersionContext {
+type GitCliffVersionContext = {
 	version: string | null;
 	commits: Array<{
 		id: string;
@@ -44,7 +45,7 @@ interface GitCliffVersionContext {
 		timestamp: number;
 		previous: null;
 	};
-}
+};
 
 type GitCliffCommitsContext = GitCliffVersionContext[];
 
@@ -67,9 +68,9 @@ export async function genChangelog() {
 		commitsContextJson
 	) as GitCliffCommitsContext;
 
-	for (const commit of commitsContext) {
-
+	for (const _commit of commitsContext) {
+		// TODO
 	}
 
-	return stdout;
+	return commitsContextJson;
 }

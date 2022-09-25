@@ -1,10 +1,11 @@
+import process from 'node:process';
+
 import Enquirer from 'enquirer';
 import { Listr } from 'listr2';
-import process from 'node:process';
+import type { NormalizedPackageJson } from 'read-pkg-up';
 import type { ReleaseType } from 'semver';
-import type { PackageJson } from 'type-fest';
 
-import type { LionpOptions } from '~/types/options';
+import type { LionpOptions } from '~/types/options.js';
 
 import * as git from './git.js';
 import * as npm from './npm/index.js';
@@ -13,7 +14,7 @@ import { createVersion, getSemverIncrements, isValidInput } from './version.js';
 
 export const prerequisiteTasks = (
 	input: string,
-	pkg: PackageJson,
+	pkg: NormalizedPackageJson,
 	options: LionpOptions
 ) => {
 	const isExternalRegistry = npm.isExternalRegistry(pkg);
@@ -48,7 +49,7 @@ export const prerequisiteTasks = (
 			async task() {
 				const username = await npm.username({
 					externalRegistry: isExternalRegistry
-						? pkg.publishConfig?.registry
+						? pkg.publishConfig.registry
 						: false,
 				});
 
@@ -86,12 +87,14 @@ export const prerequisiteTasks = (
 				}
 
 				newVersion =
-					createVersion(pkg.version!).getNewVersionFrom(input as ReleaseType) ??
+					createVersion(pkg.version).getNewVersionFrom(input as ReleaseType) ??
 					undefined;
 
-				if (createVersion(pkg.version!).isLowerThanOrEqualTo(newVersion!)) {
+				if (createVersion(pkg.version).isLowerThanOrEqualTo(newVersion!)) {
 					throw new Error(
-						`New version \`${newVersion!}\` should be higher than current version \`${pkg.version!}\``
+						`New version \`${newVersion!}\` should be higher than current version \`${
+							pkg.version
+						}\``
 					);
 				}
 			},

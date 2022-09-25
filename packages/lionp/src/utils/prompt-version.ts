@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import isScoped from 'is-scoped';
+import type { NormalizedPackageJson } from 'read-pkg-up';
 import type { ReleaseType } from 'semver';
-import type { PackageJson } from 'type-fest';
 
 import type { LionpOptions } from '~/types/options.js';
 
@@ -32,7 +32,7 @@ type PromptVersionOptions = {
 
 export async function promptVersion(
 	options: PromptVersionOptions,
-	pkg: PackageJson
+	pkg: NormalizedPackageJson
 ): Promise<
 	{
 		releaseNotes?: LionpOptions['releaseNotes'];
@@ -41,7 +41,7 @@ export async function promptVersion(
 		| { confirm: true; version: string }
 	)
 > {
-	const oldVersion = pkg.version!;
+	const oldVersion = pkg.version;
 	validate(oldVersion);
 
 	const { repoUrl } = options;
@@ -116,7 +116,7 @@ export async function promptVersion(
 					isPrereleaseOrIncrement(answers.version)) &&
 				options.tag !== undefined,
 			async choices() {
-				const existingPrereleaseTags = await prereleaseTags(pkg.name!);
+				const existingPrereleaseTags = await prereleaseTags(pkg.name);
 
 				return [
 					...existingPrereleaseTags,
@@ -205,7 +205,7 @@ export async function promptVersion(
 			{
 				type: 'confirm',
 				name: 'confirm',
-				when: isScoped(pkg.name!) && options.runPublish,
+				when: isScoped(pkg.name) && options.runPublish,
 				message: `Failed to check availability of scoped repo name ${chalk.bold.magenta(
 					pkg.name
 				)}. Do you want to try and publish it anyway?`,

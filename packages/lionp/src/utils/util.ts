@@ -2,7 +2,7 @@ import { execa } from 'execa';
 import issueRegex from 'issue-regex';
 import pMemoize from 'p-memoize';
 import { packageDirectorySync } from 'pkg-dir';
-import { readPackageUpSync } from 'read-pkg-up';
+import { NormalizedPackageJson, readPackageUpSync } from 'read-pkg-up';
 import terminalLink from 'terminal-link';
 import type { PackageJson } from 'type-fest';
 
@@ -75,7 +75,7 @@ export const getTagVersionPrefix = pMemoize(async () => {
 	}
 });
 
-export const getNewFiles = async (pkg: PackageJson) => {
+export const getNewFiles = async (pkg: NormalizedPackageJson) => {
 	const listNewFiles = await git.newFilesSinceLastRelease();
 	return {
 		unpublished: await npm.getNewAndUnpublishedFiles(pkg, listNewFiles),

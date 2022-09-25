@@ -56,6 +56,7 @@
 		"semver": "^7.3.7",
 		"symbol-observable": "^4.0.0",
 		"terminal-link": "^3.0.0",
+		"tiny-invariant": "^1.2.0",
 		"type-fest": "^3.0.0",
 		"update-notifier": "^6.0.2"
 	},
@@ -67,6 +68,7 @@
 		"@types/inquirer": "^9.0.1",
 		"@types/minimatch": "^5.1.2",
 		"@types/node": "^18.7.20",
+		"@types/normalize-package-data": "^2.4.1",
 		"@types/semver": "^7.3.12",
 		"@types/sinon": "^10.0.13",
 		"@types/update-notifier": "^6.0.1",

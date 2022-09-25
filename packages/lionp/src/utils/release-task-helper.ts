@@ -1,6 +1,6 @@
 import newGithubReleaseUrl from 'new-github-release-url';
 import open from 'open';
-import type { PackageJson } from 'type-fest';
+import type { NormalizedPackageJson } from 'read-pkg-up';
 
 import type { LionpOptions } from '~/types/options.js';
 import { genChangelog } from '~/utils/changelog.js';
@@ -10,9 +10,9 @@ import { createVersion } from './version.js';
 
 export const releaseTaskHelper = async (
 	options: LionpOptions,
-	pkg: PackageJson
+	pkg: NormalizedPackageJson
 ) => {
-	const newVersion = createVersion(pkg.version!).getNewVersionFrom(
+	const newVersion = createVersion(pkg.version).getNewVersionFrom(
 		options.version
 	)!;
 	let tag = `${await getTagVersionPrefix()}${newVersion}`;

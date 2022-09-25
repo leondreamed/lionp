@@ -1,7 +1,8 @@
+import process from 'node:process';
+
 import type { ExecaError } from 'execa';
 import logSymbols from 'log-symbols';
 import meow from 'meow';
-import process from 'node:process';
 import type { Package } from 'update-notifier';
 import updateNotifier from 'update-notifier';
 

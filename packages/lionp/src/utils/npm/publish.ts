@@ -2,7 +2,7 @@ import type { ExecaError } from 'execa';
 import { execa } from 'execa';
 import type { ListrTaskWrapper } from 'listr2';
 
-import type { LionpOptions } from '~/types/options';
+import type { LionpOptions } from '~/types/options.js';
 
 import { handleNpmError } from './handle-npm-error.js';
 

@@ -1,12 +1,13 @@
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+
 import exitHook from 'async-exit-hook';
-import del from 'del';
+import { deleteAsync } from 'del';
 import type { ExecaError } from 'execa';
 import { execa } from 'execa';
 import hostedGitInfo from 'hosted-git-info';
 import { Listr } from 'listr2';
 import logSymbols from 'log-symbols';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
 import onetime from 'onetime';
 import { packageDirectorySync } from 'pkg-dir';
 import { readPackageUp } from 'read-pkg-up';
@@ -35,7 +36,7 @@ export async function lionp(options: LionpOptions) {
 	const rootDir = packageDirectorySync();
 	const pkgManager = 'pnpm';
 	const pkgManagerName = 'pnpm';
-	const hasLockFile = fs.existsSync(path.resolve(rootDir, 'pnpm-lock.yaml'));
+	const hasLockFile = fs.existsSync(path.resolve(rootDir!, 'pnpm-lock.yaml'));
 	const isOnGitHub =
 		options.repoUrl === undefined
 			? false
@@ -51,7 +52,7 @@ export async function lionp(options: LionpOptions) {
 	];
 	let publishStatus = 'UNKNOWN';
 	let pushedObjects: { pushed: string; reason: string } | undefined;
-	const isRepoRoot = fs.existsSync(path.resolve(rootDir, '.git'));
+	const isRepoRoot = fs.existsSync(path.resolve(rootDir!, '.git'));
 
 	const rollback = onetime(async () => {
 		console.log('\nPublish failed. Rolling back to the previous state…');
@@ -127,7 +128,7 @@ export async function lionp(options: LionpOptions) {
 			{
 				title: 'Cleanup',
 				enabled: () => !hasLockFile,
-				task: async () => del('node_modules'),
+				task: async () => deleteAsync('node_modules'),
 			},
 			{
 				title: 'Installing dependencies using pnpm',
@@ -243,6 +244,7 @@ export async function lionp(options: LionpOptions) {
 						);
 					}
 
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 					publishStatus = hasError ? 'FAILED' : 'SUCCESS';
 				},
 			},
