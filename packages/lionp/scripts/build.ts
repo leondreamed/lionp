@@ -1,11 +1,9 @@
-import { execaCommandSync as exec } from 'execa';
-import { chProjectDir, copyPackageFiles, rmDist } from 'lionconfig';
 import * as fs from 'node:fs';
 
-chProjectDir(import.meta.url);
+import { copyPackageFiles, rmDist, tsc } from 'lionconfig';
+
 rmDist();
-exec('tsc');
-exec('tsc-alias');
+await tsc();
 await copyPackageFiles({
 	additionalFiles: ['npm-binary.config.cjs'],
 });
