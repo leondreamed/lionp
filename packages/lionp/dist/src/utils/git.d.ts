@@ -1,0 +1,33 @@
+export declare const latestTag: () => Promise<string>;
+export declare const newFilesSinceLastRelease: () => Promise<string[]>;
+export declare const previousTagOrFirstCommit: () => Promise<string | undefined>;
+export declare const latestTagOrFirstCommit: () => Promise<string>;
+export declare const getCurrentBranch: () => Promise<string>;
+export declare const hasUpstream: () => Promise<boolean>;
+export declare const verifyCurrentBranchIsReleaseBranch: (releaseBranch: string) => Promise<void>;
+export declare const tagList: () => Promise<string[]>;
+export declare const isHeadDetached: () => Promise<boolean>;
+export declare const isWorkingTreeClean: () => Promise<boolean>;
+export declare const verifyWorkingTreeIsClean: () => Promise<void>;
+export declare const isRemoteHistoryClean: () => Promise<boolean>;
+export declare const verifyRemoteHistoryIsClean: () => Promise<void>;
+export declare const verifyRemoteIsValid: () => Promise<void>;
+export declare const fetch: () => Promise<void>;
+export declare const tagExistsOnRemote: (tagName: string) => Promise<boolean>;
+export declare const defaultBranch: () => Promise<string>;
+export declare const verifyTagDoesNotExistOnRemote: (tagName: string) => Promise<void>;
+export declare const commitLogFromRevision: (revision: string) => Promise<string>;
+export declare const pushGraceful: (remoteIsOnGitHub: boolean) => Promise<{
+    pushed: string;
+    reason: string;
+} | undefined>;
+export declare const gitPush: () => Promise<void>;
+export declare const deleteTag: (tagName: string) => Promise<void>;
+export declare const removeLastCommit: () => Promise<void>;
+export declare const verifyRecentGitVersion: () => Promise<void>;
+export declare const checkIfFileGitIgnored: (pathToFile: string) => Promise<boolean>;
+export declare function printCommitLog(repoUrl: string | undefined, registryUrl: string, fromLatestTag: boolean, releaseBranch: string): Promise<{
+    hasCommits: boolean;
+    hasUnreleasedCommits: boolean;
+    releaseNotes: (_tag: string) => string;
+}>;
