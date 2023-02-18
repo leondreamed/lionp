@@ -19,9 +19,9 @@
 		"lionp": "./bin/lionp.js"
 	},
 	"scripts": {
-		"start": "node-ts ./src/bin/lionp.ts",
+		"start": "ts-node ./src/bin/lionp.ts",
 		"release": "pnpm build && node ./dist/bin/lionp.js",
-		"build": "node-ts ./scripts/build.ts"
+		"build": "ts-node ./scripts/build.ts"
 	},
 	"dependencies": {
 		"async-exit-hook": "^2.0.1",
