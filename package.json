@@ -4,7 +4,7 @@
 		"release": "pnpm --filter=lionp run release"
 	},
 	"devDependencies": {
-		"lionconfig": "^1.8.4",
-		"typescript": "^4.8.3"
+		"lionconfig": "^2.3.2",
+		"typescript": "^4.9.5"
 	}
 }

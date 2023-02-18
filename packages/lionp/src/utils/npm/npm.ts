@@ -13,13 +13,14 @@ import pTimeout from 'p-timeout';
 import { packageDirectorySync } from 'pkg-dir';
 import type { NormalizedPackageJson } from 'read-pkg-up';
 import type { PackageJson } from 'type-fest';
+import semver from 'semver'
 
 import { verifyRequirementSatisfied } from '../version.js';
 
 export const isExternalRegistry = (
 	pkg: NormalizedPackageJson
 ): pkg is PackageJson &
-	normalize.Package & { publishConfig: { registry: string } } =>
+normalize.Package & { publishConfig: { registry: string } } =>
 	typeof pkg.publishConfig === 'object' &&
 	typeof pkg.publishConfig.registry === 'string';
 
@@ -92,7 +93,8 @@ export const collaborators = async (pkg: NormalizedPackageJson) => {
 		throw new TypeError('package name must be a string');
 	}
 
-	const args = ['access', 'ls-collaborators', packageName];
+	const npmVersion = await exports.version();
+	const args = semver.satisfies(npmVersion, '>=9.0.0') ? ['access', 'list', 'collaborators', packageName, '--json'] : ['access', 'ls-collaborators', packageName];
 	if (isExternalRegistry(pkg)) {
 		args.push('--registry', pkg.publishConfig.registry);
 	}
@@ -127,7 +129,17 @@ export const prereleaseTags = async (packageName: string) => {
 		tags = Object.keys(JSON.parse(stdout)).filter((tag) => tag !== 'latest');
 	} catch (error: unknown) {
 		const err = error as ExecaError;
-		if (JSON.parse(err.stdout)?.error?.code !== 'E404') {
+		// HACK: NPM is mixing JSON with plain text errors. Luckily, the error
+		// always starts with 'npm ERR!' (unless you have a debugger attached)
+		// so as a solution, until npm/cli#2740 is fixed, we can remove anything
+		// starting with 'npm ERR!'
+		const errorMessage: string = err.stderr;
+		const errorJSON = errorMessage
+			.split('\n')
+			.filter(error => !error.startsWith('npm ERR!'))
+			.join('\n');
+
+		if (((JSON.parse(errorJSON) || {}).error || {}).code !== 'E404') {
 			throw error;
 		}
 	}
@@ -228,8 +240,8 @@ function filterFileList(globArray: string[], fileList: string[]) {
 	const globString =
 		globArray.length > 1
 			? `{${globArray
-					.filter((singlePath) => excludeGitAndNodeModulesPaths(singlePath))
-					.join(',')}}`
+				.filter((singlePath) => excludeGitAndNodeModulesPaths(singlePath))
+				.join(',')}}`
 			: globArray[0]!;
 
 	return fileList.filter(
@@ -260,7 +272,7 @@ function getFilesNotIncludedInFilesProperty(
 			if (fs.statSync(path.resolve(rootDir!, glob)).isDirectory()) {
 				globArrayForFilesAndDirectories.push(`${glob}/**/*`);
 			}
-		} catch {}
+		} catch { }
 	}
 
 	const result = fileList.filter(
@@ -288,7 +300,7 @@ function getFilesIncludedInFilesProperty(
 			if (fs.statSync(path.resolve(rootDir!, glob)).isDirectory()) {
 				globArrayForFilesAndDirectories.push(`${glob}/**/*`);
 			}
-		} catch {}
+		} catch { }
 	}
 
 	return filterFileList(globArrayForFilesAndDirectories, fileList);
